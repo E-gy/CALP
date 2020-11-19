@@ -5,8 +5,8 @@
 
 struct symbol {
 	enum {
-		TOK_TYPE_TERM = 0,
-		TOK_TYPE_GROUP,
+		SYMBOL_TYPE_TERM = 0,
+		SYMBOL_TYPE_GROUP,
 	} type;
 	union {
 		struct {
@@ -21,13 +21,13 @@ struct symbol {
 
 Symbol symbol_new_term(TerminalSymbolId term){
 	new(Symbol, tok);
-	*tok = (struct symbol){ TOK_TYPE_TERM, {.term = {term}}, null };
+	*tok = (struct symbol){ SYMBOL_TYPE_TERM, {.term = {term, name}}, null };
 	return tok;
 }
 
 Symbol symbol_new_group(GroupId group){
 	new(Symbol, tok);
-	*tok = (struct symbol){ TOK_TYPE_GROUP, {.group = {group}}, null };
+	*tok = (struct symbol){ SYMBOL_TYPE_GROUP, {.group = {group}}, null };
 	return tok;
 }
 
