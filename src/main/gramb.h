@@ -22,7 +22,14 @@ struct grammar;
 typedef struct grammar* Grammar;
 
 
-typedef bool (*TerminalSymbolId)(string);
+/**
+ * Id of the terminal symbol is also the predicate and the consumer:
+ * - it uniquely globally idenitifies the symbol
+ * - executing it on a string tests whether given string starts with the symbol
+ * - executing it on a string that starts with the symbol returns the character [right after] the end of the symbol
+ * **The ONLY time** when the terminal symbol function should return the input (i.e. match of length 0) is by EOI symbol when EOI is reached.
+ */
+typedef string (*TerminalSymbolId)(string);
 typedef Group (*GroupId)(void);
 
 

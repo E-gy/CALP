@@ -2,7 +2,7 @@
 
 #include "gramb.h"
 
-#define DEF_SYMBOL_TERMINAL(name, pbody) static bool name(string str) pbody
+#define DEF_SYMBOL_TERMINAL(name, pbody) static string name(string str) pbody
 
 #define DEF_GROUP(name, rules) static Group name(){ GroupBuilder _gb = groupb_new(&name, #name); if(_gb){ rules; } return groupb_uild(_gb); }
 
