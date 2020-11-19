@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gramb.h"
+#include "grammarb.h"
 
 #define DEF_SYMBOL_TERMINAL(name, pbody) static string name(string str) pbody
 

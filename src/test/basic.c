@@ -1,3 +1,4 @@
+#include "../main/grammaro.h"
 #include "../main/gramdef.h"
 
 #include <stdlib.h>

@@ -1,36 +1,6 @@
 #pragma once
 
-#include <stdbool.h>
-#include "string.h"
-
-struct symbol;
-typedef struct symbol* Symbol;
-
-struct ruleb;
-typedef struct ruleb* RuleBuilder;
-struct rule;
-typedef struct rule* Rule;
-
-struct groupb;
-typedef struct groupb* GroupBuilder;
-struct group;
-typedef struct group* Group;
-
-struct gramb;
-typedef struct gramb* GrammarBuilder;
-struct grammar;
-typedef struct grammar* Grammar;
-
-
-/**
- * Id of the terminal symbol is also the predicate and the consumer:
- * - it uniquely globally idenitifies the symbol
- * - executing it on a string tests whether given string starts with the symbol
- * - executing it on a string that starts with the symbol returns the character [right after] the end of the symbol
- */
-typedef string (*TerminalSymbolId)(string);
-typedef Group (*GroupId)(void);
-
+#include "grammar.h"
 
 /**
  * @ref term
@@ -43,6 +13,9 @@ Symbol symbol_new_term(TerminalSymbolId term, string name);
  * @produces symbol
  */
 Symbol symbol_new_group(GroupId group);
+
+struct ruleb;
+typedef struct ruleb* RuleBuilder;
 
 /**
  * @produces builder
@@ -58,6 +31,9 @@ RuleBuilder ruleb_add(RuleBuilder builder, Symbol symbol);
  * @produces rule
  */
 Rule ruleb_uild(RuleBuilder builder);
+
+struct groupb;
+typedef struct groupb* GroupBuilder;
 
 /**
  * @ref id
@@ -76,6 +52,9 @@ GroupBuilder groupb_add(GroupBuilder builder, Rule rule);
  */
 Group groupb_uild(GroupBuilder builder);
 
+struct gramb;
+typedef struct gramb* GrammarBuilder;
+
 /**
  * @produces builder
  */
@@ -90,12 +69,3 @@ GrammarBuilder gramb_add(GrammarBuilder builder, Group group);
  * @produces grammar
  */
 Grammar gramb_uild(GrammarBuilder builder);
-
-#ifdef _DEBUG
-
-/**
- * @ref grammar
- */
-void grammar_print(Grammar grammar);
-
-#endif

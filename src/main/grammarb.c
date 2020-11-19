@@ -1,24 +1,8 @@
-#include "gramb.h"
+#include "grammarb.h"
 
+#include "grammard.h"
 #include <stdlib.h>
 #include "null.h"
-
-struct symbol {
-	enum {
-		SYMBOL_TYPE_TERM = 0,
-		SYMBOL_TYPE_GROUP,
-	} type;
-	union {
-		struct {
-			TerminalSymbolId id;
-			string name;
-		} term;
-		struct {
-			GroupId id;
-		} group;
-	} val;
-	Symbol next;
-};
 
 Symbol symbol_new_term(TerminalSymbolId term, string name){
 	new(Symbol, tok);
@@ -51,11 +35,6 @@ RuleBuilder ruleb_add(RuleBuilder b, Symbol s){
 	return b;
 }
 
-struct rule {
-	Symbol symbols;
-	Rule next;
-};
-
 Rule ruleb_uild(RuleBuilder b){
 	if(!b) return null;
 	new(Rule, r);
@@ -85,13 +64,6 @@ GroupBuilder groupb_add(GroupBuilder b, Rule r){
 	return b;
 }
 
-struct group {
-	GroupId id;
-	string name;
-	Rule rules;
-	Group next;
-};
-
 Group groupb_uild(GroupBuilder b){
 	if(!b) return null;
 	new(Group, g);
@@ -119,11 +91,6 @@ GrammarBuilder gramb_add(GrammarBuilder b, Group g){
 	return b;
 }
 
-struct grammar {
-	string name;
-	Group groups;
-};
-
 Grammar gramb_uild(GrammarBuilder b){
 	if(!b) return null;
 	new(Grammar, g);
@@ -131,39 +98,3 @@ Grammar gramb_uild(GrammarBuilder b){
 	free(b);
 	return g;
 }
-
-#ifdef _DEBUG
-
-#include <stdio.h>
-
-void grammar_print(Grammar g){
-	if(!g) return;
-	printf("%s:\n", g->name);
-	for(Group gg = g->groups; gg; gg = gg->next){
-		printf("	%s:\n", gg->name);
-		for(Rule r = gg->rules; r; r = r->next){
-			printf("		| ");
-			for(Symbol s = r->symbols; s; s = s->next){
-				switch (s->type){
-					case SYMBOL_TYPE_TERM:
-						printf("'%s'", s->val.term.name);
-						break;
-					case SYMBOL_TYPE_GROUP: {
-						string grn = null;
-						for(Group gg = g->groups; gg && !grn; gg = gg->next) if(gg->id == s->val.group.id) grn = gg->name; 
-						printf("<%s>", grn ? grn : "[UNKNOWN GROUP]");
-						break;
-					}
-				}
-				if(s->next) printf(" ");
-			}
-			printf("\n");
-		}
-	}
-}
-
-#else 
-
-void grammar_print(Grammar grammar){}
-
-#endif
