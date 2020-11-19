@@ -85,4 +85,11 @@ GrammarBuilder gramb_add(GrammarBuilder builder, Group group);
  */
 Grammar gramb_uild(GrammarBuilder builder);
 
+#ifdef _DEBUG
+
+/**
+ * @ref grammar
+ */
+void grammar_print(Grammar grammar);
+
 #endif
