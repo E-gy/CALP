@@ -11,6 +11,7 @@ struct symbol {
 	union {
 		struct {
 			TerminalSymbolId id;
+			string name;
 		} term;
 		struct {
 			GroupId id;
@@ -19,7 +20,7 @@ struct symbol {
 	Symbol next;
 };
 
-Symbol symbol_new_term(TerminalSymbolId term){
+Symbol symbol_new_term(TerminalSymbolId term, string name){
 	new(Symbol, tok);
 	*tok = (struct symbol){ SYMBOL_TYPE_TERM, {.term = {term, name}}, null };
 	return tok;
@@ -65,13 +66,14 @@ Rule ruleb_uild(RuleBuilder b){
 
 struct groupb {
 	GroupId id;
+	string name;
 	Rule first;
 	Rule last;
 };
 
-GroupBuilder groupb_new(GroupId id){
+GroupBuilder groupb_new(GroupId id, string name){
 	new(GroupBuilder, b);
-	*b = (struct groupb){id, null, null};
+	*b = (struct groupb){id, name, null, null};
 	return b;
 }
 
@@ -85,6 +87,7 @@ GroupBuilder groupb_add(GroupBuilder b, Rule r){
 
 struct group {
 	GroupId id;
+	string name;
 	Rule rules;
 	Group next;
 };
@@ -92,19 +95,20 @@ struct group {
 Group groupb_uild(GroupBuilder b){
 	if(!b) return null;
 	new(Group, g);
-	*g = (struct group){b->id, b->first, null};
+	*g = (struct group){b->id, b->name, b->first, null};
 	free(b);
 	return g;
 }
 
 struct gramb {
+	string name;
 	Group first;
 	Group last;
 };
 
-GrammarBuilder gramb_new(){
+GrammarBuilder gramb_new(string name){
 	new(GrammarBuilder, b);
-	*b = (struct gramb){null, null};
+	*b = (struct gramb){name, null, null};
 	return b;
 }
 
@@ -116,13 +120,14 @@ GrammarBuilder gramb_add(GrammarBuilder b, Group g){
 }
 
 struct grammar {
+	string name;
 	Group groups;
 };
 
 Grammar gramb_uild(GrammarBuilder b){
 	if(!b) return null;
 	new(Grammar, g);
-	*g = (struct grammar){b->first};
+	*g = (struct grammar){b->name, b->first};
 	free(b);
 	return g;
 }

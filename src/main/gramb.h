@@ -28,9 +28,10 @@ typedef Group (*GroupId)(void);
 
 /**
  * @ref term
+ * @ref name
  * @produces symbol
  */
-Symbol symbol_new_term(TerminalSymbolId term);
+Symbol symbol_new_term(TerminalSymbolId term, string name);
 /**
  * @ref group
  * @produces symbol
@@ -54,9 +55,10 @@ Rule ruleb_uild(RuleBuilder builder);
 
 /**
  * @ref id
+ * @ref name
  * @produces builder
  */
-GroupBuilder groupb_new(GroupId id);
+GroupBuilder groupb_new(GroupId id, string name);
 /**
  * @refmut builder
  * @consumes rule
@@ -71,7 +73,7 @@ Group groupb_uild(GroupBuilder builder);
 /**
  * @produces builder
  */
-GrammarBuilder gramb_new();
+GrammarBuilder gramb_new(string name);
 /**
  * @refmut builder
  * @consumes group
