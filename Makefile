@@ -22,8 +22,10 @@ all: lib
 $(TEST_DIR)/%: $(TEST_DIR)/%.c
 	$(CC) -ggdb -O0 -D_DEBUG -o $@ $^ -L. -lCALP
 
-check: lib_d src/test/basic
+check: lib_d src/test/basic src/test/advanced src/test/mathg
 	./src/test/basic
+	./src/test/advanced
+	./src/test/mathg
 
 clean:
 	$(RM) $(LIB) $(OBJS)
