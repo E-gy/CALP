@@ -14,6 +14,11 @@ Symbol symbol_new_term(TerminalSymbolId term, string name);
  */
 Symbol symbol_new_group(GroupId group);
 
+/**
+ * @consumes symbol
+ */
+void symbol_destroy(Symbol symbol);
+
 struct ruleb;
 typedef struct ruleb* RuleBuilder;
 

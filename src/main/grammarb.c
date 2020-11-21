@@ -16,6 +16,11 @@ Symbol symbol_new_group(GroupId group){
 	return tok;
 }
 
+void symbol_destroy(Symbol s){
+	if(!s) return;
+	free(s);
+}
+
 struct ruleb {
 	Symbol first;
 	Symbol last;
