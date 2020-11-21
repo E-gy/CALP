@@ -10,7 +10,7 @@ struct symbol {
 	union {
 		struct {
 			TerminalSymbolId id;
-			string name;
+			/** @ref */  string name;
 		} term;
 		struct {
 			GroupId id;
