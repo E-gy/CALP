@@ -1,8 +1,6 @@
 #pragma once
 
 #include <string.h>
+#include <strings.h>
 
 #define streq !strcmp
-
-typedef const char* string;
-typedef char* string_mut;
