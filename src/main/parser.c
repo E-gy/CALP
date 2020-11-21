@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "log.h"
+#include "string.h"
+#include "result.h"
 
 struct entinf;
 typedef struct entinf* EntityInfo;
