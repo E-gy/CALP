@@ -9,3 +9,7 @@ file(GLOB all_SRCS
 		"${PROJECT_SOURCE_DIR}/src/main/*.c"
 	)
 add_library(CALP ${all_SRCS})
+target_compile_options(CALP PRIVATE
+	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
+)
