@@ -14,5 +14,5 @@ DEF_GRAMMAR(grm_basic, GROUP(grp_0))
 int main(){
 	Grammar g = grm_basic();
 	printf("grammar: %p\n", g);
-	grammar_print(g);
+	grammar_log(g);
 }
