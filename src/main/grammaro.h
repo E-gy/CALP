@@ -1,6 +1,6 @@
 #pragma once
 
-#include "grammar.h"
+#include <grammar.h>
 
 #ifdef _DEBUG
 
