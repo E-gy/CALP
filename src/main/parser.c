@@ -2,6 +2,7 @@
 
 #include "grammard.h"
 #include "null.h"
+#include "log.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
