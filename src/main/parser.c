@@ -267,6 +267,7 @@ Parser parser_build(Grammar gr){
 }
 
 #include "parserp.h"
+#include "buffer.h"
 
 static AST parser_makast(Parser p, Symbol symb, string* str){
 	switch(symb->type){
@@ -276,7 +277,7 @@ static AST parser_makast(Parser p, Symbol symb, string* str){
 				logdebug("'%s' failed to match \"%s\"", symb->val.term.name, *str);
 				return null;
 			}
-			AST ret = ast_new_leaf(symb, strndup(*str, nom-*str));
+			AST ret = ast_new_leaf(symb, buffer_destr(buffer_new_from(*str, nom-*str)));
 			*str = nom;
 			return ret;
 		}
