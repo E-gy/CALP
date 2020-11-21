@@ -1,7 +1,7 @@
 #include "ast.h"
 
 #include <stdlib.h>
-#include "null.h"
+#include <util/null.h>
 
 AST ast_new_group(Symbol symbol, Group g, size_t children_count){
 	AST ast = calloc(sizeof(*ast)/sizeof(ast) + children_count, sizeof(*ast->d.group.children));
@@ -29,7 +29,7 @@ void ast_destroy(AST ast){
 	free(ast);
 }
 
-#include "log.h"
+#include <util/log.h>
 #include <stdbool.h>
 #include "grammard.h"
 

@@ -1,11 +1,11 @@
 #include "grammaro.h"
 
 #include "grammard.h"
-#include "null.h"
+#include <util/null.h>
 
 #ifdef _DEBUG
 
-#include "log.h"
+#include <util/log.h>
 
 void symbols_logi(Grammar g, Symbol s){
 	for(; s; s = s->next){

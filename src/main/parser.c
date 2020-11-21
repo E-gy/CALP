@@ -1,12 +1,12 @@
 #include "parser.h"
 
 #include "grammard.h"
-#include "null.h"
+#include <util/null.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "log.h"
-#include "string.h"
-#include "result.h"
+#include <util/log.h>
+#include <util/string.h>
+#include <util/result.h>
 
 struct entinf;
 typedef struct entinf* EntityInfo;
@@ -269,7 +269,7 @@ Parser parser_build(Grammar gr){
 }
 
 #include "parserp.h"
-#include "buffer.h"
+#include <util/buffer.h>
 
 static AST parser_makast(Parser p, Symbol symb, string* str){
 	switch(symb->type){
