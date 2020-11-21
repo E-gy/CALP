@@ -13,5 +13,5 @@
 #ifdef _DEBUG
 #define logdebug(fmt, ...) do { printf("[%s:%d]%s: ", __FILE__, __LINE__, __func__); printf(fmt "\n", ##__VA_ARGS__); } while (0)
 #else
-#define logdebug(fmt, ...) do {} while (0)
+#define logdebug(...) do {} while (0)
 #endif
