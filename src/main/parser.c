@@ -4,6 +4,7 @@
 #include "null.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include "log.h"
 
 struct entinf;
 typedef struct entinf* EntityInfo;

@@ -1,4 +1,3 @@
-#define _GNU_SOURCE
 #pragma once
 
 #include <string.h>
