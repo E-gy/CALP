@@ -16,6 +16,7 @@ target_compile_options(CALP PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
 	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
 )
+target_compile_options(CALP PUBLIC $<$<CONFIG:DEBUG>:-O0 -fprofile-arcs -ftest-coverage>)
 
 # Tests
 
@@ -48,6 +49,7 @@ target_link_libraries(tests Catch2::Catch2)
 include_directories(tests ${PROJECT_SOURCE_DIR}/src/api)
 include_directories(tests ${PROJECT_SOURCE_DIR}/src/main)
 target_link_libraries(tests CALP)
+target_link_libraries(tests gcov)
 
 include(CTest)
 include(Catch)
