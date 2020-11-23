@@ -11,14 +11,14 @@ extern "C" {
 #include <ctype.h>
 
 DEF_SYMBOL_TERMINAL(eof, { return !*str ? str : NULL; })
-DEF_SYMBOL_TERMINAL(ε, { return str; })
+DEF_SYMBOL_TERMINAL(eps, { return str; })
 DEF_SYMBOL_TERMINAL(sp, { return str[0] == ' ' ? str+1 : NULL; })
-DEF_GROUP(sps, RULE(SYMBOL_T(sp); SYMBOL_G(sps)); RULE(SYMBOL_T(ε)));
+DEF_GROUP(sps, RULE(SYMBOL_T(sp); SYMBOL_G(sps)); RULE(SYMBOL_T(eps)));
 DEF_SYMBOL_TERMINAL(a, { return str[0] == 'a' ? str+1 : NULL; })
 DEF_SYMBOL_TERMINAL(b, { return str[0] == 'b' ? str+1 : NULL; })
 DEF_SYMBOL_TERMINAL(c, { return str[0] == 'c' ? str+1 : NULL; })
-DEF_GROUP(a_, RULE(SYMBOL_T(a)); RULE(SYMBOL_T(ε)))
-DEF_GROUP(b_, RULE(SYMBOL_T(b)); RULE(SYMBOL_T(ε)))
+DEF_GROUP(a_, RULE(SYMBOL_T(a)); RULE(SYMBOL_T(eps)))
+DEF_GROUP(b_, RULE(SYMBOL_T(b)); RULE(SYMBOL_T(eps)))
 DEF_GROUP(g0, RULE(SYMBOL_G(a_); SYMBOL_G(sps); SYMBOL_G(b_); SYMBOL_T(c); SYMBOL_T(eof)))
 DEF_GRAMMAR(grm_advanced, GROUP(g0); GROUP(a_); GROUP(b_); GROUP(sps))
 }

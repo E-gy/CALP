@@ -11,7 +11,7 @@ extern "C" {
 #include <ctype.h>
 
 DEF_SYMBOL_TERMINAL(eof, { return !*str ? str : NULL; })
-DEF_SYMBOL_TERMINAL(ε, { return str; })
+DEF_SYMBOL_TERMINAL(eps, { return str; })
 DEF_SYMBOL_TERMINAL(number, {
 	if(!isdigit(*str)){
 		if(*str != '-') return NULL;
@@ -32,9 +32,9 @@ static Group muls();
 static Group adds();
 DEF_GROUP(pOm, RULE(SYMBOL_T(plus)); RULE(SYMBOL_T(minus)))
 DEF_GROUP(tOd, RULE(SYMBOL_T(times)); RULE(SYMBOL_T(divide)))
-DEF_GROUP(muls_, RULE(SYMBOL_G(tOd); SYMBOL_G(muls)); RULE(SYMBOL_T(ε)))
+DEF_GROUP(muls_, RULE(SYMBOL_G(tOd); SYMBOL_G(muls)); RULE(SYMBOL_T(eps)))
 DEF_GROUP(muls, RULE(SYMBOL_G(ng); SYMBOL_G(muls_)))
-DEF_GROUP(adds_, RULE(SYMBOL_G(pOm); SYMBOL_G(adds)); RULE(SYMBOL_T(ε)))
+DEF_GROUP(adds_, RULE(SYMBOL_G(pOm); SYMBOL_G(adds)); RULE(SYMBOL_T(eps)))
 DEF_GROUP(adds, RULE(SYMBOL_G(muls); SYMBOL_G(adds_)))
 DEF_GROUP(ng, RULE(SYMBOL_T(lpar); SYMBOL_G(adds); SYMBOL_T(rpar)); RULE(SYMBOL_T(number)))
 DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls_); GROUP(muls); GROUP(adds_); GROUP(adds);)
