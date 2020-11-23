@@ -51,6 +51,7 @@ include_directories(tests ${PROJECT_SOURCE_DIR}/src/main)
 target_link_libraries(tests CALP)
 target_link_libraries(tests gcov)
 
+set(CTEST_OUTPUT_ON_FAILURE 1)
 include(CTest)
 include(Catch)
 catch_discover_tests(tests)
