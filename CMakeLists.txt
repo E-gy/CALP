@@ -14,3 +14,21 @@ target_compile_options(CALP PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
 	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
 )
+
+# Tests
+
+file(GLOB src_test
+        "${PROJECT_SOURCE_DIR}/src/test/*.h"
+		"${PROJECT_SOURCE_DIR}/src/test/*.c"
+        "${PROJECT_SOURCE_DIR}/src/test/*.hpp"
+		"${PROJECT_SOURCE_DIR}/src/test/*.cpp"
+	)
+add_executable(tests ${src_test})
+target_compile_options(tests PRIVATE
+	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
+)
+
+target_link_libraries(tests CALP)
+
+include(CTest)
