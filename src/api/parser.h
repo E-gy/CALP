@@ -1,6 +1,5 @@
 #pragma once
 
-#include "result.h"
 #include "grammar.h"
 
 struct parser;

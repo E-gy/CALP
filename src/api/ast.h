@@ -2,6 +2,8 @@
 
 #include "grammar.h"
 
+#include <stddef.h>
+
 struct ast;
 typedef struct ast* AST;
 struct ast {

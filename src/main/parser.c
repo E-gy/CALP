@@ -1,10 +1,12 @@
-#include "parser.h"
+#include <parser.h>
 
 #include "grammard.h"
-#include "null.h"
-#include "log.h"
+#include <util/null.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <util/log.h>
+#include <util/string.h>
+#include <util/result.h>
 
 struct entinf;
 typedef struct entinf* EntityInfo;
@@ -267,6 +269,7 @@ Parser parser_build(Grammar gr){
 }
 
 #include "parserp.h"
+#include <util/buffer.h>
 
 static AST parser_makast(Parser p, Symbol symb, string* str){
 	switch(symb->type){
@@ -276,7 +279,7 @@ static AST parser_makast(Parser p, Symbol symb, string* str){
 				logdebug("'%s' failed to match \"%s\"", symb->val.term.name, *str);
 				return null;
 			}
-			AST ret = ast_new_leaf(symb, strndup(*str, nom-*str));
+			AST ret = ast_new_leaf(symb, buffer_destr(buffer_new_from(*str, nom-*str)));
 			*str = nom;
 			return ret;
 		}

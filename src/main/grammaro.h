@@ -1,8 +1,6 @@
 #pragma once
 
-#include "grammar.h"
-
-#ifdef _DEBUG
+#include <grammar.h>
 
 /**
  * @ref grammar
@@ -14,5 +12,3 @@ void symbols_logi(Grammar grammar, Symbol symbols);
  * @ref grammar
  */
 void grammar_log(Grammar grammar);
-
-#endif
