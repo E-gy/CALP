@@ -43,7 +43,7 @@ Result buffer_resize(Buffer b, size_t newcap){
 	char* nd = realloc(b->data, newcap+1);
 	if(!nd) return Error;
 	nd[newcap] = '\0';
-	*b = (struct buffer){newcap, min(b->cap, b->size), nd};
+	*b = (struct buffer){newcap, min(newcap, b->size), nd};
 	return Ok;
 }
 
