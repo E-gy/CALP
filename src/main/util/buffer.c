@@ -37,7 +37,7 @@ Buffer buffer_new_from(string str, ssize_t len){
 	return b;
 }
 
-static Result buffer_resize(Buffer b, size_t newcap){
+Result buffer_resize(Buffer b, size_t newcap){
 	if(!b) return Error;
 	if(newcap == b->cap) return Ok;
 	char* nd = realloc(b->data, newcap+1);

@@ -43,6 +43,11 @@ string_mut buffer_destr(Buffer buffer);
 Buffer buffer_new_from(string str, ssize_t len);
 
 /**
+ * @refmut buffer
+ */
+Result buffer_resize(Buffer buffer, size_t newcap);
+
+/**
  * @param from first byte of the deleted range in buffer
  * @param toe first byte after the deleted range in buffer
  * @refmut buffer
