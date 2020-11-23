@@ -31,3 +31,12 @@ jobs:
       working-directory: ${{runner.workspace}}/build
       shell: bash
       run: make ExperimentalCoverage
+    - name: lcov
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: lcov --coverage --directory ./Testing/CoverageInfo -o lcov.info
+    - name: Publish coverage to Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: build/lcov.info
