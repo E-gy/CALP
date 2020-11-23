@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.11)
+
+Include(FetchContent)
 
 project(CALP VERSION 0.0.1)
 set(CMAKE_C_STANDARD 99)
@@ -29,6 +31,17 @@ target_compile_options(tests PRIVATE
 	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
 )
 
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG        v2.13.1)
+FetchContent_MakeAvailable(Catch2)
+FetchContent_GetProperties(Catch2 SOURCE_DIR src_Catch2)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${src_Catch2}/contrib/")
+target_link_libraries(tests Catch2::Catch2)
+
 target_link_libraries(tests CALP)
 
 include(CTest)
+include(Catch)
+catch_discover_tests(tests)
