@@ -39,6 +39,7 @@ void grammar_log(Grammar g){
 
 #else 
 
+void symbols_logi(Grammar g, Symbol s){}
 void grammar_log(Grammar grammar){}
 
 #endif
