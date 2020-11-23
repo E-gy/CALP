@@ -102,7 +102,7 @@ SCENARIO("buffer can be resized", "[buffer][low-level]"){
 	}
 }
 
-SCENARIO("buffer can be modified in ✨ ways", "[buffer][high-level]"){
+SCENARIO("buffer can be modified in magical ways", "[buffer][high-level]"){
 	GIVEN("an empty buffer"){
 		Buffer buff = buffer_new(0);
 		THEN("deleting anything is no-op"){
