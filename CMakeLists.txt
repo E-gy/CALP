@@ -16,7 +16,7 @@ target_compile_options(CALP PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
 	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
 )
-target_compile_options(CALP PUBLIC $<$<CONFIG:DEBUG>:-O0 -fprofile-arcs -ftest-coverage>)
+target_compile_options(CALP PUBLIC $<$<CONFIG:DEBUG>:--coverage>)
 
 # Tests
 
