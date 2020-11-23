@@ -7,7 +7,7 @@ set(CMAKE_C_STANDARD 99)
 
 include_directories(${PROJECT_SOURCE_DIR}/src/api)
 include_directories(${PROJECT_SOURCE_DIR}/src/main)
-file(GLOB all_SRCS
+file(GLOB_RECURSE all_SRCS
         "${PROJECT_SOURCE_DIR}/src/main/*.h"
 		"${PROJECT_SOURCE_DIR}/src/main/*.c"
 	)
