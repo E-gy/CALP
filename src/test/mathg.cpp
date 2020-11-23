@@ -1,7 +1,10 @@
-#include "../main/grammaro.h"
-#include "../main/gramdef.h"
-#include "../main/parser.h"
-#include "../main/parserp.h"
+#include <catch2/catch.hpp>
+
+extern "C" {
+#include <grammaro.h>
+#include <gramdef.h>
+#include <parser.h>
+#include <parserp.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -35,13 +38,13 @@ DEF_GROUP(adds_, RULE(SYMBOL_G(pOm); SYMBOL_G(adds)); RULE(SYMBOL_T(ε)))
 DEF_GROUP(adds, RULE(SYMBOL_G(muls); SYMBOL_G(adds_)))
 DEF_GROUP(ng, RULE(SYMBOL_T(lpar); SYMBOL_G(adds); SYMBOL_T(rpar)); RULE(SYMBOL_T(number)))
 DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls_); GROUP(muls); GROUP(adds_); GROUP(adds);)
+}
 
-int main(){
+TEST_CASE("math grammar", "[math grammar]"){
 	Grammar g = math();
 	printf("grammar: %p\n", g);
 	grammar_log(g);
 	Parser p = parser_build(g);
-	if(!p) return 1;
 	ast_log(parseraw(p, "12", &adds));
 	ast_log(parseraw(p, "12+25", &adds));
 	ast_log(parseraw(p, "(-21*13/2)*((12/2-25*4)-1)", &adds));
