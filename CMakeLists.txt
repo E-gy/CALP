@@ -20,7 +20,7 @@ target_compile_options(CALP PUBLIC $<$<CONFIG:DEBUG>:--coverage>)
 
 # Tests
 
-file(GLOB src_test
+file(GLOB_RECURSE src_test
         "${PROJECT_SOURCE_DIR}/src/test/*.h"
 		"${PROJECT_SOURCE_DIR}/src/test/*.c"
         "${PROJECT_SOURCE_DIR}/src/test/*.hpp"
