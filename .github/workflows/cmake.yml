@@ -34,12 +34,7 @@ jobs:
     - name: Install Lcov
       working-directory: '~'
       shell: bash
-      run: |
-        sudo apt install libperlio-gzip-perl libjson-perl
-        wget "https://github.com/linux-test-project/lcov/archive/master.zip"
-        unzip "master.zip"
-        cd "lcov-master"
-        sudo make install
+      run: sudo apt-get install -y lcov
     - name: lcov
       working-directory: ${{runner.workspace}}/build
       shell: bash
