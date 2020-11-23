@@ -31,6 +31,7 @@ target_compile_options(tests PRIVATE
 	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
 )
 
+# Catch2 from Fetch works properly, so 
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
@@ -40,6 +41,12 @@ FetchContent_GetProperties(Catch2 SOURCE_DIR src_Catch2)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${src_Catch2}/contrib/")
 target_link_libraries(tests Catch2::Catch2)
 
+# no uniheaders ~~for now~~
+# list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/Modules")
+# include_directories(tests ${PROJECT_SOURCE_DIR}/src/test)
+
+include_directories(tests ${PROJECT_SOURCE_DIR}/src/api)
+include_directories(tests ${PROJECT_SOURCE_DIR}/src/main)
 target_link_libraries(tests CALP)
 
 include(CTest)
