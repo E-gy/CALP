@@ -32,7 +32,6 @@ jobs:
       shell: bash
       run: make ExperimentalCoverage
     - name: Install Lcov
-      working-directory: '~'
       shell: bash
       run: sudo apt-get install -y lcov
     - name: lcov
