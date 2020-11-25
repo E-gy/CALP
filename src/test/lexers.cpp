@@ -182,6 +182,32 @@ SCENARIO("lexer space begone", "[lexer]"){
 			});
 		}
 	}
+	WHEN("there's a newline"){
+		char str[] = "  	badumtss	\n     ";
+		LexerResult r = lexer_spacebegone(str, eat_alnum);
+		THEN("newline isn't whitespace for this one"){
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+3);
+				REQUIRE(ok.end == str+11);
+				REQUIRE(ok.next == str+12);
+				REQUIRE(*ok.next == '\n');
+			});
+		}
+	}
+	WHEN("there's a Windows newline"){
+		char str[] = "  	badumtss	\r\n     ";
+		LexerResult r = lexer_spacebegone(str, eat_alnum);
+		THEN("newline, even from Windows, isn't whitespace for this one"){
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+3);
+				REQUIRE(ok.end == str+11);
+				REQUIRE(ok.next == str+12);
+				REQUIRE(*ok.next == '\r');
+			});
+		}
+	}
 	WHEN("chain it"){
 		char str[] = "  	badum	tss   ba dum  dum 		tsss  ";
 		THEN("let's rock!"){
