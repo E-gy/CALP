@@ -31,7 +31,7 @@ void ast_destroy(AST ast){
 
 #include <calp/util/log.h>
 #include <stdbool.h>
-#include "grammard.h"
+#include "grammar/internals.h"
 
 static void ast_log_d(AST ast, size_t d, size_t laste){
 	{

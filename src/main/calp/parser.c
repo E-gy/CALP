@@ -1,6 +1,6 @@
 #include <calp/parser.h>
 
-#include "grammard.h"
+#include "grammar/internals.h"
 #include <calp/util/null.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -136,7 +136,7 @@ static EntityInfo entimap_add(EntitiesMap m, struct entinf ii){
 #ifndef NDEBUG
 
 #include <calp/util/log.h>
-#include "grammaro.h"
+#include <calp/grammar/fun.h>
 
 static void entimap_log(Grammar gr, EntitiesMap m){
 	logf("%s:", gr->name);
@@ -331,7 +331,7 @@ static AST parser_makast(Parser p, Symbol symb, string* str){
 	}
 } 
 
-#include "grammarb.h"
+#include <calp/grammar/build.h>
 
 AST parseraw(Parser p, string s, GroupId g0){
 	if(!p || !s || !g0) return null;

@@ -1,6 +1,6 @@
-#include "grammaro.h"
+#include <calp/grammar/fun.h>
 
-#include "grammard.h"
+#include "internals.h"
 #include <calp/util/null.h>
 
 #ifndef NDEBUG

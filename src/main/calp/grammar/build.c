@@ -1,6 +1,6 @@
-#include "grammarb.h"
+#include <calp/grammar/build.h>
 
-#include "grammard.h"
+#include "internals.h"
 #include <stdlib.h>
 #include <calp/util/null.h>
 
