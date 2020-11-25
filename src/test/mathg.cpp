@@ -48,4 +48,5 @@ TEST_CASE("math grammar", "[math grammar]"){
 	ast_log(parseraw(p, "12", &adds));
 	ast_log(parseraw(p, "12+25", &adds));
 	ast_log(parseraw(p, "(-21*13/2)*((12/2-25*4)-1)", &adds));
+	ast_log(parseraw(p, "120-15-29*2-13", &adds));
 }
