@@ -1,8 +1,8 @@
 #include <catch2/catch.hpp>
 
 extern "C" {
-#include <calp/grammaro.h>
-#include <calp/gramdef.h>
+#include <calp/grammar/fun.h>
+#include <calp/grammar/define.h>
 #include <calp/parser.h>
 #include <calp/parserp.h>
 
