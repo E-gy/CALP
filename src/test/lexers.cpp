@@ -117,3 +117,117 @@ SCENARIO("lexer0", "[lexer]"){
 		}
 	}
 }
+
+SCENARIO("lexer space begone", "[lexer]"){
+	WHEN("given nothing"){
+		THEN("it refuses"){
+			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)))
+		}
+	}
+	WHEN("given uneatable"){
+		THEN("it refuses"){
+			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)))
+		}
+	}
+	WHEN("given nothingness"){
+		THEN("it refuses"){
+			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)))
+		}
+	}
+	WHEN("given just the eatable"){
+		char str[] = "badumtss";
+		LexerResult r = lexer_spacebegone(str, eat_alnum);
+		THEN("it eats in delight"){
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str);
+				REQUIRE(ok.end == str+8);
+				REQUIRE(ok.next == str+8);
+			});
+		}
+	}
+	WHEN("the eatable is space prefixed"){
+		char str[] = "  	badumtss";
+		LexerResult r = lexer_spacebegone(str, eat_alnum);
+		THEN("space is skipped"){
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+3);
+				REQUIRE(ok.end == str+11);
+				REQUIRE(ok.next == str+11);
+			});
+		}
+	}
+	WHEN("the eatable is space suffixed"){
+		char str[] = "badumtss	     ";
+		LexerResult r = lexer_spacebegone(str, eat_alnum);
+		THEN("space is skipped, for the next one"){
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str);
+				REQUIRE(ok.end == str+8);
+				REQUIRE(ok.next == str+14);
+			});
+		}
+	}
+	WHEN("the eatable is surrounded with whitespace"){
+		char str[] = "  	badumtss	     ";
+		LexerResult r = lexer_spacebegone(str, eat_alnum);
+		THEN("no space, anywhere"){
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+3);
+				REQUIRE(ok.end == str+11);
+				REQUIRE(ok.next == str+17);
+			});
+		}
+	}
+	WHEN("chain it"){
+		char str[] = "  	badum	tss   ba dum  dum 		tsss  ";
+		THEN("let's rock!"){
+			LexerResult r = lexer_spacebegone(str, eat_alnum);
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+3);
+				REQUIRE(ok.end == str+8);
+				REQUIRE(ok.next == str+9);
+				r = lexer_spacebegone(ok.next, eat_alnum);
+			});
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+9);
+				REQUIRE(ok.end == str+12);
+				REQUIRE(ok.next == str+15);
+				r = lexer_spacebegone(ok.next, eat_alnum);
+			});
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+15);
+				REQUIRE(ok.end == str+17);
+				REQUIRE(ok.next == str+18);
+				r = lexer_spacebegone(ok.next, eat_alnum);
+			});
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+18);
+				REQUIRE(ok.end == str+21);
+				REQUIRE(ok.next == str+23);
+				r = lexer_spacebegone(ok.next, eat_alnum);
+			});
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+23);
+				REQUIRE(ok.end == str+26);
+				REQUIRE(ok.next == str+29);
+				r = lexer_spacebegone(ok.next, eat_alnum);
+			});
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str+29);
+				REQUIRE(ok.end == str+33);
+				REQUIRE(ok.next == str+35);
+				r = lexer_spacebegone(ok.next, eat_alnum);
+			});
+		}
+	}
+}
