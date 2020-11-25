@@ -10,7 +10,7 @@
 #define logerr(str) do { fprintf(stderr, str "\n"); fflush(stderr); } while (0)
 #define logerrf(fmt, ...) do { fprintf(stderr, fmt "\n", ##__VA_ARGS__); fflush(stderr); } while (0)
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 #define logdebug(fmt, ...) do { printf("[%s:%d]%s: ", __FILE__, __LINE__, __func__); printf(fmt "\n", ##__VA_ARGS__); } while (0)
 #else
 #define logdebug(...) do {} while (0)

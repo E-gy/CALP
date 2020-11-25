@@ -3,7 +3,7 @@
 #include "grammard.h"
 #include <calp/util/null.h>
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 
 #include <util/log.h>
 

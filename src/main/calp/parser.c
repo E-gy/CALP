@@ -133,7 +133,7 @@ static EntityInfo entimap_add(EntitiesMap m, struct entinf ii){
 	return *i = nii;
 }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 
 #include <calp/util/log.h>
 #include "grammaro.h"
