@@ -121,17 +121,17 @@ SCENARIO("lexer0", "[lexer]"){
 SCENARIO("lexer space begone", "[lexer]"){
 	WHEN("given nothing"){
 		THEN("it refuses"){
-			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)))
+			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)));
 		}
 	}
 	WHEN("given uneatable"){
 		THEN("it refuses"){
-			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)))
+			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)));
 		}
 	}
 	WHEN("given nothingness"){
 		THEN("it refuses"){
-			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)))
+			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)));
 		}
 	}
 	WHEN("given just the eatable"){
