@@ -20,3 +20,7 @@ typedef bool Result;
 
 typedef const char* string;
 typedef char* string_mut;
+struct string_v {
+	char s[128];
+};
+#define string_v struct string_v
