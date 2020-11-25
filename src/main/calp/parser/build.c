@@ -1,6 +1,7 @@
 #include <calp/parser/build.h>
 
 #include "internals.h"
+#include <stdlib.h>
 
 Result_T(pbf_result, void*, string_v);
 #define PBFResult struct pbf_result
@@ -19,11 +20,12 @@ static PBFResult parser_build_firsts(Grammar gr, EntitiesMap m, EntityInfo gi){
 				case SYMB_TERM:
 					if(!fnni->nullable && !FirstList_add(gi->i.group.firsts, fnni, r)) return Error_T(pbf_result, {"First list add element failed"});
 					break;
-				case SYMB_GROUP:
+				case SYMB_GROUP: {
 					PBFResult bfr = parser_build_firsts(gr, m, fnni);
 					if(!IsOk_T(bfr)) return bfr;
 					for(FirstListElement cpfl = fnni->i.group.firsts->first; cpfl; cpfl = cpfl->next) if(!FirstList_add(gi->i.group.firsts, cpfl->symbol, r)) return Error_T(pbf_result, {"First list add element failed"});
 					break;
+				}
 				default: break;
 			}
 			if(!fnni->nullable) break;

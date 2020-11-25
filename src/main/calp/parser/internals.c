@@ -81,7 +81,7 @@ EntityInfo entimap_add(EntitiesMap m, struct entinf ii){
 #include <calp/util/log.h>
 #include <calp/grammar/fun.h>
 
-static void entimap_log(Grammar gr, EntitiesMap m){
+void entimap_log(Grammar gr, EntitiesMap m){
 	logf("%s:", gr->name);
 	for(size_t j = 0; j < ENTIMAPS; j++) for(EntityInfo i = m->ents[j]; i; i = i->mapnext) if(i->type == SYMB_TERM){
 		logf("	'%s':", i->i.term.symbol->val.term.name);
@@ -113,6 +113,6 @@ static void entimap_log(Grammar gr, EntitiesMap m){
 
 #else
 
-static void entimap_log(Grammar gr, EntitiesMap m){}
+void entimap_log(Grammar gr, EntitiesMap m){}
 
 #endif

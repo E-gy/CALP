@@ -2,6 +2,7 @@
 
 #include "internals.h"
 #include <calp/util/buffer.h>
+#include <calp/util/log.h>
 
 static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str);
 static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, Group gr);
@@ -22,6 +23,7 @@ static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol
 		*str = sstr;
 		return Ok_T(parse_result, gast);
 	}
+	return Error_T(parse_result, {"rule match failed"});
 }
 
 static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str){
@@ -53,9 +55,9 @@ static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str){
 				if(IsOk_T(res)) return res;
 			}
 			logdebug("<%s> first list exhausted, no matches", gi->i.group.group->name);
-			return Error_T(parse_result, "First list exhausted, no matches found");
+			return Error_T(parse_result, {"First list exhausted, no matches found"});
 		}
-		default: return Error_T(parse_result, "._."); //._.
+		default: return Error_T(parse_result, {"._."}); //._.
 	}
 } 
 
