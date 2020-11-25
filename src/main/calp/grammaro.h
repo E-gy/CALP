@@ -1,6 +1,6 @@
 #pragma once
 
-#include <grammar.h>
+#include <calp/grammar.h>
 
 /**
  * @ref grammar

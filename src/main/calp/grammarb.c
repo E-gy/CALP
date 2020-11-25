@@ -2,7 +2,7 @@
 
 #include "grammard.h"
 #include <stdlib.h>
-#include <util/null.h>
+#include <calp/util/null.h>
 
 Symbol symbol_new_term(TerminalSymbolId term, string name){
 	new(Symbol, tok);

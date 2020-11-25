@@ -1,9 +1,9 @@
 #include "buffer.h"
 
 #include <stdlib.h>
-#include <util/null.h>
-#include <util/string.h>
-#include <util/math.h>
+#include "null.h"
+#include "string.h"
+#include "math.h"
 
 Buffer buffer_new(size_t inicap){
 	char* data = calloc(inicap+1, sizeof(*data));

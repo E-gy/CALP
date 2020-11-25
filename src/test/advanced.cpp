@@ -1,10 +1,10 @@
 #include <catch2/catch.hpp>
 
 extern "C" {
-#include <grammaro.h>
-#include <gramdef.h>
-#include <parser.h>
-#include <parserp.h>
+#include <calp/grammaro.h>
+#include <calp/gramdef.h>
+#include <calp/parser.h>
+#include <calp/parserp.h>
 
 #include <stdlib.h>
 #include <stdio.h>

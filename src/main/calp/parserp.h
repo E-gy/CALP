@@ -1,6 +1,6 @@
 #pragma once
 
-#include <parser.h>
-#include <ast.h>
+#include <calp/parser.h>
+#include <calp/ast.h>
 
 AST parseraw(Parser parser, string input, GroupId g0);

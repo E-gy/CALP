@@ -1,12 +1,12 @@
-#include <parser.h>
+#include <calp/parser.h>
 
 #include "grammard.h"
-#include <util/null.h>
+#include <calp/util/null.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <util/log.h>
-#include <util/string.h>
-#include <util/result.h>
+#include <calp/util/log.h>
+#include <calp/util/string.h>
+#include <calp/util/result.h>
 
 struct entinf;
 typedef struct entinf* EntityInfo;
@@ -136,7 +136,7 @@ static EntityInfo entimap_add(EntitiesMap m, struct entinf ii){
 
 #ifdef _DEBUG
 
-#include "log.h"
+#include <calp/util/log.h>
 #include "grammaro.h"
 
 static void entimap_log(Grammar gr, EntitiesMap m){
@@ -269,7 +269,7 @@ Parser parser_build(Grammar gr){
 }
 
 #include "parserp.h"
-#include <util/buffer.h>
+#include <calp/util/buffer.h>
 
 static AST parser_makast(Parser p, Symbol symb, string* str){
 	switch(symb->type){

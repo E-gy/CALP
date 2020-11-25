@@ -1,6 +1,6 @@
 #pragma once
 
 #include <string.h>
-#include <strings.h>
+#include <calp/strings.h>
 
 #define streq !strcmp
