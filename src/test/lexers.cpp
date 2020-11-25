@@ -97,3 +97,23 @@ SCENARIO("test eaters", "[self-test]"){
 	}
 }
 
+SCENARIO("lexer0", "[lexer]"){
+	char str[] = "abc123ddd++";
+	WHEN("can eat"){
+		struct lexer_result r = lexer0(str, eat_alpha);
+		THEN("lexer eats"){
+			REQUIRE(IsOk_T(r));
+			IfOk_T(r, ok, {
+				REQUIRE(ok.start == str);
+				REQUIRE(ok.end == str+3);
+				REQUIRE(ok.next == str+3);
+			});
+		}
+	}
+	WHEN("can't eat"){
+		struct lexer_result r = lexer0(str+3, eat_alpha);
+		THEN("lexer does not eat"){
+			REQUIRE(IsNotOk_T(r));
+		}
+	}
+}
