@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <calp/util/log.h>
 #include <calp/util/string.h>
-#include <calp/util/result.h>
 
 struct entinf;
 typedef struct entinf* EntityInfo;

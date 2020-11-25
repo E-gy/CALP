@@ -2,7 +2,7 @@
 
 #include "grammar.h"
 
-#include <stddef.h>
+#include "ptypes.h"
 
 struct ast;
 typedef struct ast* AST;

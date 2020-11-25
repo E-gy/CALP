@@ -3,6 +3,7 @@ using Catch::Matchers::Equals;
 
 extern "C" {
 	#include <calp/util/buffer.h>
+	#include <calp/util/string.h>
 }
 
 SCENARIO("buffer can be constructed and destroyed", "[buffer][low-level]"){

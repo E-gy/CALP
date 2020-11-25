@@ -1,9 +1,6 @@
 #pragma once
 
-#include <stddef.h>
-#include <sys/types.h>
-#include "result.h"
-#include "string.h"
+#include <calp/ptypes.h>
 
 struct buffer {
 	size_t cap;
