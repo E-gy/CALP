@@ -27,15 +27,15 @@ static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol
 static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str){
 	switch(symb->type){
 		case SYMBOL_TYPE_TERM: {
-			string nom = symb->val.term.id(*str);
-			if(!nom){
+			IfElse_T(l(*str, symb->val.term.id), ok, {
+				AST ret = ast_new_leaf(symb, buffer_destr(buffer_new_from(ok.start, ok.end-ok.start)));
+				if(!ret) return Error_T(parse_result, {"[INTERNAL] AST leaf construction failed"});
+				*str = ok.next;
+				return Ok_T(parse_result, ret);
+			}, err, {
 				logdebug("'%s' failed to match \"%s\"", symb->val.term.name, *str);
 				return Error_T(parse_result, {"Terminal symbol failed to match"});
-			}
-			AST ret = ast_new_leaf(symb, buffer_destr(buffer_new_from(*str, nom-*str)));
-			if(!ret) return Error_T(parse_result, {"[INTERNAL] AST leaf construction failed"});
-			*str = nom;
-			return Ok_T(parse_result, ret);
+			});
 		}
 		case SYMBOL_TYPE_GROUP: {
 			EntityInfo gi = entimap_get(p->ents, entinf_blank_group(symb->val.group.id));
