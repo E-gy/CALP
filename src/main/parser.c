@@ -294,13 +294,17 @@ static AST parser_makast(Parser p, Symbol symb, string* str){
 					for(Symbol rs = r->symbols; rs; rs = rs->next) rsc++;
 					AST gast = ast_new_group(symb, gi->i.group.group, rsc);
 					size_t i = 0;
+					string sstr = *str;
 					for(Symbol rs = r->symbols; rs; rs = rs->next){
-						AST rsast = parser_makast(p, rs, str);
+						AST rsast = parser_makast(p, rs, &sstr);
 						if(!rsast) break;
 						gast->d.group.children[i++] = rsast;
 					}
 					if(i != rsc) ast_destroy(gast);
-					else return gast;
+					else {
+						*str = sstr;
+						return gast;
+					}
 				}
 			}
 			if(gi->i.group.firsts->fallback){
@@ -309,13 +313,17 @@ static AST parser_makast(Parser p, Symbol symb, string* str){
 				for(Symbol rs = r->symbols; rs; rs = rs->next) rsc++;
 				AST gast = ast_new_group(symb, gi->i.group.group, rsc);
 				size_t i = 0;
+				string sstr = *str;
 				for(Symbol rs = r->symbols; rs; rs = rs->next){
-					AST rsast = parser_makast(p, rs, str);
+					AST rsast = parser_makast(p, rs, &sstr);
 					if(!rsast) break;
 					gast->d.group.children[i++] = rsast;
 				}
 				if(i != rsc) ast_destroy(gast);
-				else return gast;
+				else {
+					*str = sstr;
+					return gast;
+				}
 			}
 			logdebug("<%s> first list exhausted, no matches", gi->i.group.group->name);
 			return null; //parser error
