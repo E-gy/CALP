@@ -5,7 +5,7 @@
 
 #ifndef NDEBUG
 
-#include <util/log.h>
+#include <calp/util/log.h>
 
 void symbols_logi(Grammar g, Symbol s){
 	for(; s; s = s->next){
