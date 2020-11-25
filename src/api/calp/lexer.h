@@ -14,6 +14,7 @@ Result_T(lexer_result, struct {
 	/** @ref */ string end;
 	/** @ref */ string next;
 }, string_v);
+#define LexerResult struct lexer_result
 
 /**
  * @ref str

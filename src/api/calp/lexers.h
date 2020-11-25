@@ -2,4 +2,4 @@
 
 #include "lexer.h"
 
-struct lexer_result lexer0(string string, SelfLexingToken token);
+LexerResult lexer0(string string, SelfLexingToken token);

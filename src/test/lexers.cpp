@@ -100,7 +100,7 @@ SCENARIO("test eaters", "[self-test]"){
 SCENARIO("lexer0", "[lexer]"){
 	char str[] = "abc123ddd++";
 	WHEN("can eat"){
-		struct lexer_result r = lexer0(str, eat_alpha);
+		LexerResult r = lexer0(str, eat_alpha);
 		THEN("lexer eats"){
 			REQUIRE(IsOk_T(r));
 			IfOk_T(r, ok, {
@@ -111,7 +111,7 @@ SCENARIO("lexer0", "[lexer]"){
 		}
 	}
 	WHEN("can't eat"){
-		struct lexer_result r = lexer0(str+3, eat_alpha);
+		LexerResult r = lexer0(str+3, eat_alpha);
 		THEN("lexer does not eat"){
 			REQUIRE(IsNotOk_T(r));
 		}
