@@ -39,6 +39,57 @@ DEF_GROUP(adds, RULE(SYMBOL_G(adds); SYMBOL_G(pOm); SYMBOL_G(muls)); RULE(SYMBOL
 DEF_GROUP(ng, RULE(SYMBOL_T(lpar); SYMBOL_G(adds); SYMBOL_T(rpar)); RULE(SYMBOL_T(number)))
 DEF_GROUP(entry, RULE(SYMBOL_G(adds); SYMBOL_T(eof)))
 DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls); GROUP(adds); GROUP(entry))
+
+#include <calp/ast.h>
+
+Result_T(matheval_result, long, string_v);
+#define MathResult struct matheval_result
+
+static MathResult math_eval(AST ast){
+	switch(ast->type){
+		case ast->AST_GROUP:
+			if(ast->d.group.groupId == ng) switch(ast->d.group.cc){
+				case 1:	return math_eval(ast->d.group.children[0]);
+				case 3: return math_eval(ast->d.group.children[1]);
+				default: return Error_T(matheval_result, {"Invalid construction"});
+			} else if(ast->d.group.groupId == adds) switch(ast->d.group.cc){
+				case 1:	return math_eval(ast->d.group.children[0]);
+				case 3: {
+					const AST opast = ast->d.group.children[1];
+					const TerminalSymbolId op = opast->type == ast->AST_GROUP && opast->d.group.groupId == pOm ? opast->d.group.children[0]->d.leaf.symbolId : NULL;
+					if(op != plus && op != minus) return Error_T(matheval_result, {"Invalid operator (must be +-)"});
+					MathResult el = math_eval(ast->d.group.children[0]);
+					if(!IsOk_T(el)) return el;
+					MathResult er = math_eval(ast->d.group.children[2]);
+					if(!IsOk_T(er)) return er;
+					return Ok_T(matheval_result, op == plus ? el.r.ok + er.r.ok : el.r.ok - er.r.ok);
+				}
+				default: return Error_T(matheval_result, {"Invalid construction"});
+			} else if(ast->d.group.groupId == muls) switch(ast->d.group.cc){
+				case 1:	return math_eval(ast->d.group.children[0]);
+				case 3: {
+					const AST opast = ast->d.group.children[1];
+					const TerminalSymbolId op = opast->type == ast->AST_GROUP && opast->d.group.groupId == tOd ? opast->d.group.children[0]->d.leaf.symbolId : NULL;
+					if(op != times && op != divide) return Error_T(matheval_result, {"Invalid operator (must be */)"});
+					MathResult el = math_eval(ast->d.group.children[0]);
+					if(!IsOk_T(el)) return el;
+					MathResult er = math_eval(ast->d.group.children[2]);
+					if(!IsOk_T(er)) return er;
+					return Ok_T(matheval_result, op == times ? el.r.ok * er.r.ok : el.r.ok / er.r.ok);
+				}
+				default: return Error_T(matheval_result, {"Invalid construction"});
+			} else if(ast->d.group.groupId == entry) return math_eval(ast->d.group.children[0]);
+			else return Error_T(matheval_result, {"Unknown group"});
+		case ast->AST_LEAF: {
+			if(ast->d.leaf.symbolId != number) return Error_T(matheval_result, {"Leaf symbol is not a number"});
+			string_mut ep = ast->d.leaf.val;
+			long v = strtol(ep, &ep, 10);
+			if(ep == ast->d.leaf.val) return Error_T(matheval_result, {"Not a number"});
+			return Ok_T(matheval_result, v);
+		}
+		default: return Error_T(matheval_result, {"._."});
+	}
+}
 }
 
 SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"){
