@@ -5,6 +5,9 @@ extern "C" {
 	#include <ctype.h>
 }
 
+string eat_eoi(string str){
+	return !*str ? str : NULL;
+}
 string eat_char_a(string str){
 	return *str == 'a' ? str+1 : NULL;
 }
@@ -132,6 +135,23 @@ SCENARIO("lexer space begone", "[lexer]"){
 	WHEN("given nothingness"){
 		THEN("it refuses"){
 			REQUIRE(IsNotOk_T(lexer_spacebegone("", eat_alnum)));
+		}
+	}
+	WHEN("given lots of space"){
+		char str[] = "  		 ";
+		THEN("it refuses"){
+			REQUIRE(IsNotOk_T(lexer_spacebegone(str, eat_alnum)));
+		}
+		AND_WHEN("the token accepts EOI"){
+			LexerResult r = lexer_spacebegone(str, eat_eoi);
+			THEN("it accepts"){
+				REQUIRE(IsOk_T(r));
+				IfOk_T(r, ok, {
+					REQUIRE(ok.start == str+5);
+					REQUIRE(ok.end == str+5);
+					REQUIRE(ok.next == str+5);
+				});
+			}
 		}
 	}
 	WHEN("given just the eatable"){
