@@ -1,4 +1,4 @@
-#include "catch2ext.hpp"
+#include "../catch2ext.hpp"
 
 extern "C" {
 #include <calp/grammar/fun.h>
@@ -42,15 +42,21 @@ DEF_GROUP(ng, RULE(SYMBOL_T(lpar); SYMBOL_G(adds); SYMBOL_T(rpar)); RULE(SYMBOL_
 DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls_); GROUP(muls); GROUP(adds_); GROUP(adds);)
 }
 
-TEST_CASE("math grammar", "[math grammar][parsing][parser construction][grammar]"){
+SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"){
 	Grammar g = math();
-	printf("grammar: %p\n", g);
-	grammar_log(g);
-	ParserBuildResult pr = parser_build(g);
-	IfElse_T(pr, p, {
-		IfElse_T(parser_parse(p, lexer0, "12", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-		IfElse_T(parser_parse(p, lexer0, "12+25", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-		IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-		IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-	}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
+	GIVEN("maths grammar"){
+		printf("grammar: %p\n", g);
+		grammar_log(g);
+		ParserBuildResult pr = parser_build(g);
+			THEN("parser can be built"){
+			IfElse_T(pr, p, {
+				AND_THEN("what can be parsed - parses"){
+					IfElse_T(parser_parse(p, lexer0, "12", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "12+25", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+				}
+			}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
+		}
+	}
 }
