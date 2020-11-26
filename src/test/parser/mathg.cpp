@@ -39,7 +39,8 @@ DEF_GROUP(muls, RULE(SYMBOL_G(ng); SYMBOL_G(muls_)))
 DEF_GROUP(adds_, RULE(SYMBOL_G(pOm); SYMBOL_G(adds)); RULE(SYMBOL_T(eps)))
 DEF_GROUP(adds, RULE(SYMBOL_G(muls); SYMBOL_G(adds_)))
 DEF_GROUP(ng, RULE(SYMBOL_T(lpar); SYMBOL_G(adds); SYMBOL_T(rpar)); RULE(SYMBOL_T(number)))
-DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls_); GROUP(muls); GROUP(adds_); GROUP(adds);)
+DEF_GROUP(entry, RULE(SYMBOL_G(adds); SYMBOL_T(eof)))
+DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls_); GROUP(muls); GROUP(adds_); GROUP(adds); GROUP(entry))
 }
 
 SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"){
@@ -51,10 +52,10 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 			THEN("parser can be built"){
 			IfElse_T(pr, p, {
 				AND_THEN("what can be parsed - parses"){
-					IfElse_T(parser_parse(p, lexer0, "12", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "12+25", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "12", &entry), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "12+25", &entry), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &entry), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &entry), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 				}
 			}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
 		}
