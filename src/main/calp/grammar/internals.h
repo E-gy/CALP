@@ -21,6 +21,7 @@ struct symbol {
 
 struct rule {
 	Symbol symbols;
+	size_t symbolsc;
 	Rule next;
 };
 
@@ -28,10 +29,12 @@ struct group {
 	GroupId id;
 	string name;
 	Rule rules;
+	size_t rulesc;
 	Group next;
 };
 
 struct grammar {
 	string name;
 	Group groups;
+	size_t groupsc;
 };

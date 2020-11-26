@@ -43,7 +43,9 @@ RuleBuilder ruleb_add(RuleBuilder b, Symbol s){
 Rule ruleb_uild(RuleBuilder b){
 	if(!b) return null;
 	new(Rule, r);
-	*r = (struct rule){b->first, null};
+	size_t sc = 0;
+	for(Symbol s = b->first; s; s = s->next) sc++;
+	*r = (struct rule){b->first, sc, null};
 	free(b);
 	return r;
 }
@@ -72,7 +74,9 @@ GroupBuilder groupb_add(GroupBuilder b, Rule r){
 Group groupb_uild(GroupBuilder b){
 	if(!b) return null;
 	new(Group, g);
-	*g = (struct group){b->id, b->name, b->first, null};
+	size_t rc = 0;
+	for(Rule r = b->first; r; r = r->next) rc++;
+	*g = (struct group){b->id, b->name, b->first, rc, null};
 	free(b);
 	return g;
 }
@@ -99,7 +103,9 @@ GrammarBuilder gramb_add(GrammarBuilder b, Group g){
 Grammar gramb_uild(GrammarBuilder b){
 	if(!b) return null;
 	new(Grammar, g);
-	*g = (struct grammar){b->name, b->first};
+	size_t grc = 0;
+	for(Group gr = b->first; gr; gr = gr->next) grc++;
+	*g = (struct grammar){b->name, b->first, grc};
 	free(b);
 	return g;
 }
