@@ -14,7 +14,8 @@ FirstList FirstList_new(){
 
 Result FirstList_add(FirstList l, EntityInfo symbol, Rule r){
 	if(!l) return Error;
-	new(FirstListElement, e);
+	FirstListElement e = malloc(sizeof(*e));
+	if(!e) return Error;
 	*e = (struct groupfle){symbol, r, l->first};
 	l->first = e;
 	return Ok;
