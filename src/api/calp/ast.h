@@ -14,11 +14,13 @@ struct ast {
 	Symbol symbol;
 	union {
 		struct {
+			/** @ref */ GroupId groupId;
 			/** @ref */ Group group;
 			size_t cc;
 			AST children[];
 		} group;
 		struct {
+			/** @ref */ TerminalSymbolId symbolId;
 			string_mut val;
 		} leaf;
 	} d;

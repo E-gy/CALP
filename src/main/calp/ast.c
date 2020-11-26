@@ -6,13 +6,13 @@
 AST ast_new_group(Symbol symbol, Group g, size_t children_count){
 	AST ast = calloc(sizeof(*ast)/sizeof(ast) + children_count, sizeof(*ast->d.group.children));
 	if(!ast) return null;
-	*ast = (struct ast){AST_GROUP, symbol, {.group = {g, children_count}}};
+	*ast = (struct ast){AST_GROUP, symbol, {.group = {g->id, g, children_count}}};
 	return ast;
 }
 
 AST ast_new_leaf(Symbol symbol, string_mut val){
 	new(AST, ast);
-	*ast = (struct ast){ AST_LEAF, symbol, {.leaf = { val }} };
+	*ast = (struct ast){ AST_LEAF, symbol, {.leaf = { symbol->val.term.id, val }} };
 	return ast;
 }
 
