@@ -5,7 +5,7 @@
 #include <calp/util/log.h>
 
 static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str);
-static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, Group gr);
+static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, EntityInfo gi);
 
 static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, EntityInfo gi){
 	size_t rsc = 0;
