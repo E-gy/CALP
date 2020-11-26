@@ -34,13 +34,11 @@ static Group muls();
 static Group adds();
 DEF_GROUP(pOm, RULE(SYMBOL_T(plus)); RULE(SYMBOL_T(minus)))
 DEF_GROUP(tOd, RULE(SYMBOL_T(times)); RULE(SYMBOL_T(divide)))
-DEF_GROUP(muls_, RULE(SYMBOL_G(tOd); SYMBOL_G(muls)); RULE(SYMBOL_T(eps)))
-DEF_GROUP(muls, RULE(SYMBOL_G(ng); SYMBOL_G(muls_)))
-DEF_GROUP(adds_, RULE(SYMBOL_G(pOm); SYMBOL_G(adds)); RULE(SYMBOL_T(eps)))
-DEF_GROUP(adds, RULE(SYMBOL_G(muls); SYMBOL_G(adds_)))
+DEF_GROUP(muls, RULE(SYMBOL_G(muls); SYMBOL_G(tOd); SYMBOL_G(ng)); RULE(SYMBOL_G(ng)))
+DEF_GROUP(adds, RULE(SYMBOL_G(adds); SYMBOL_G(pOm); SYMBOL_G(muls)); RULE(SYMBOL_G(muls)))
 DEF_GROUP(ng, RULE(SYMBOL_T(lpar); SYMBOL_G(adds); SYMBOL_T(rpar)); RULE(SYMBOL_T(number)))
 DEF_GROUP(entry, RULE(SYMBOL_G(adds); SYMBOL_T(eof)))
-DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls_); GROUP(muls); GROUP(adds_); GROUP(adds); GROUP(entry))
+DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls); GROUP(adds); GROUP(entry))
 }
 
 SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"){
