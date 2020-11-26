@@ -1,4 +1,4 @@
-#include <catch2/catch.hpp>
+#include "catch2ext.hpp"
 
 extern "C" {
 #include <calp/grammar/fun.h>
@@ -31,10 +31,10 @@ TEST_CASE("advanced", "[advanced][parsing][parser construction][grammar]"){
 	grammar_log(g);
 	ParserBuildResult pr = parser_build(g);
 	IfElse_T(pr, p, {
-		IfElse_T(parser_parse(p, lexer0, "a bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-		IfElse_T(parser_parse(p, lexer0, "ac", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-		IfElse_T(parser_parse(p, lexer0, "bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-		IfElse_T(parser_parse(p, lexer0, "a   bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-		IfElse_T(parser_parse(p, lexer0, "  bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-	}, err, { FAIL("Parser build failed"); });
+		IfElse_T(parser_parse(p, lexer0, "a bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+		IfElse_T(parser_parse(p, lexer0, "ac", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+		IfElse_T(parser_parse(p, lexer0, "bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+		IfElse_T(parser_parse(p, lexer0, "a   bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+		IfElse_T(parser_parse(p, lexer0, "  bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+	}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
 }

@@ -1,4 +1,4 @@
-#include <catch2/catch.hpp>
+#include "catch2ext.hpp"
 
 extern "C" {
 #include <calp/grammar/fun.h>
@@ -47,11 +47,10 @@ TEST_CASE("math grammar", "[math grammar][parsing][parser construction][grammar]
 	printf("grammar: %p\n", g);
 	grammar_log(g);
 	ParserBuildResult pr = parser_build(g);
-	REQUIRE(IsOk_T(pr));
 	IfElse_T(pr, p, {
-		IfElse_T(parser_parse(p, lexer0, "12", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-		IfElse_T(parser_parse(p, lexer0, "12+25", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-		IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-		IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
-	}, err, { FAIL("Parser build failed"); });
+		IfElse_T(parser_parse(p, lexer0, "12", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+		IfElse_T(parser_parse(p, lexer0, "12+25", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+		IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+		IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+	}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
 }
