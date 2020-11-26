@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <calp/util/null.h>
+#include <calp/grammar/internals.h>
 
 AST ast_new_group(Symbol symbol, Group g, size_t children_count){
 	AST ast = calloc(sizeof(*ast)/sizeof(ast) + children_count, sizeof(*ast->d.group.children));
