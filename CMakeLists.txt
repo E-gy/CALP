@@ -16,6 +16,7 @@ target_compile_options(CALP PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
 	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
 )
+set_property(TARGET CALP PROPERTY POSITION_INDEPENDENT_CODE TRUE)
 
 add_library(CALPd SHARED $<TARGET_OBJECTS:CALP>)
 add_library(CALPs STATIC $<TARGET_OBJECTS:CALP>)
