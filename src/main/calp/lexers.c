@@ -13,7 +13,6 @@ LexerResult lexer0(string str, SelfLexingToken tok){
 LexerResult lexer_spacebegone(string str, SelfLexingToken tok){
 	if(!str) return Error_T(lexer_result, {"Invalid input - null string"});
 	space_skippity(str);
-	if(!*str) return Error_T(lexer_result, {"Skipped all spaces, reached end of string"});
 	string nom = tok(str);
 	if(!nom) return Error_T(lexer_result, {"Token refused to eat"});
 	string next = nom;
