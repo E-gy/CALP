@@ -35,7 +35,7 @@ static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str){
 				*str = ok.next;
 				return Ok_T(parse_result, ret);
 			}, err, {
-				logdebug("'%s' failed to match \"%s\"", symb->val.term.name, *str);
+				logdebug("'%s' failed to match \"%s\": %s", symb->val.term.name, *str, err.s);
 				return Error_T(parse_result, {"Terminal symbol failed to match"});
 			});
 		}
