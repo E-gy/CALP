@@ -101,10 +101,38 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 			THEN("parser can be built"){
 			IfElse_T(pr, p, {
 				AND_THEN("what can be parsed - parses"){
-					IfElse_T(parser_parse(p, lexer0, "12", &entry), ast, { ast_log(ast); IfElse_T(math_eval(ast), v, { CHECK(v == 12); }, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); }); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "12+25", &entry), ast, { ast_log(ast); IfElse_T(math_eval(ast), v, { CHECK(v == (12+25)); }, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); }); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &entry), ast, { ast_log(ast); IfElse_T(math_eval(ast), v, { CHECK(v == ((-21*13/2)*((12/2-25*4)-1))); }, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); }); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &entry), ast, { ast_log(ast); IfElse_T(math_eval(ast), v, { CHECK(v == (120-15-29*2-13)); }, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); }); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "12", &entry), ast, {
+						ast_log(ast);
+						AND_THEN("the result evaluates correctly"){
+							IfElse_T(math_eval(ast), v, {
+								CHECK(v == 12);
+							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); });
+						}
+					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "12+25", &entry), ast, {
+						ast_log(ast);
+						AND_THEN("the result evaluates correctly"){
+							IfElse_T(math_eval(ast), v, {
+								CHECK(v == (12+25));
+							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); });
+						}
+					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &entry), ast, {
+						ast_log(ast);
+						AND_THEN("the result evaluates correctly"){
+							IfElse_T(math_eval(ast), v, {
+								CHECK(v == ((-21*13/2)*((12/2-25*4)-1)));
+							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); });
+						}
+					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &entry), ast, {
+						ast_log(ast);
+						AND_THEN("the result evaluates correctly"){
+							IfElse_T(math_eval(ast), v, {
+								CHECK(v == (120-15-29*2-13));
+							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); }); 
+						}
+					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 				}
 			}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
 		}
