@@ -4,7 +4,9 @@ extern "C" {
 #include <calp/grammar/fun.h>
 #include <calp/grammar/define.h>
 #include <calp/parser.h>
-#include <calp/parserp.h>
+#include <calp/parser/build.h>
+#include <calp/parser/fun.h>
+#include <calp/lexers.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -23,14 +25,16 @@ DEF_GROUP(g0, RULE(SYMBOL_G(a_); SYMBOL_G(sps); SYMBOL_G(b_); SYMBOL_T(c); SYMBO
 DEF_GRAMMAR(grm_advanced, GROUP(g0); GROUP(a_); GROUP(b_); GROUP(sps))
 }
 
-TEST_CASE("advanced", "[advanced]"){
+TEST_CASE("advanced", "[advanced][parsing][parser construction][grammar]"){
 	Grammar g = grm_advanced();
 	printf("grammar: %p\n", g);
 	grammar_log(g);
-	Parser p = parser_build(g);
-	ast_log(parseraw(p, "a bc", &g0));
-	ast_log(parseraw(p, "ac", &g0));
-	ast_log(parseraw(p, "bc", &g0));
-	ast_log(parseraw(p, "a   bc", &g0));
-	ast_log(parseraw(p, "  bc", &g0));
+	ParserBuildResult pr = parser_build(g);
+	IfElse_T(pr, p, {
+		IfElse_T(parser_parse(p, lexer0, "a bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "ac", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "a   bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "  bc", &g0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+	}, err, { FAIL("Parser build failed"); });
 }

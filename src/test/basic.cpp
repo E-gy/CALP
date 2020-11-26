@@ -4,7 +4,9 @@ extern "C" {
 #include <calp/grammar/fun.h>
 #include <calp/grammar/define.h>
 #include <calp/parser.h>
-#include <calp/parserp.h>
+#include <calp/parser/build.h>
+#include <calp/parser/fun.h>
+#include <calp/lexers.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,11 +18,13 @@ DEF_GROUP(grp_0, RULE(SYMBOL_T(symb_a); SYMBOL_T(symb_eof)); RULE(SYMBOL_T(symb_
 DEF_GRAMMAR(grm_basic, GROUP(grp_0))
 }
 
-TEST_CASE("basic", "[basic]"){
+TEST_CASE("basic", "[basic][parsing][parser construction][grammar]"){
 	Grammar g = grm_basic();
 	printf("grammar: %p\n", g);
 	grammar_log(g);
-	Parser p = parser_build(g);
-	ast_log(parseraw(p, "a", &grp_0));
-	ast_log(parseraw(p, "bba", &grp_0));
+	ParserBuildResult pr = parser_build(g);
+	IfElse_T(pr, p, {
+		IfElse_T(parser_parse(p, lexer0, "a", &grp_0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "bba", &grp_0), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+	}, err, { FAIL("Parser build failed"); });
 }

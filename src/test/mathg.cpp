@@ -4,7 +4,9 @@ extern "C" {
 #include <calp/grammar/fun.h>
 #include <calp/grammar/define.h>
 #include <calp/parser.h>
-#include <calp/parserp.h>
+#include <calp/parser/build.h>
+#include <calp/parser/fun.h>
+#include <calp/lexers.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -40,13 +42,16 @@ DEF_GROUP(ng, RULE(SYMBOL_T(lpar); SYMBOL_G(adds); SYMBOL_T(rpar)); RULE(SYMBOL_
 DEF_GRAMMAR(math, GROUP(ng); GROUP(pOm); GROUP(tOd); GROUP(muls_); GROUP(muls); GROUP(adds_); GROUP(adds);)
 }
 
-TEST_CASE("math grammar", "[math grammar]"){
+TEST_CASE("math grammar", "[math grammar][parsing][parser construction][grammar]"){
 	Grammar g = math();
 	printf("grammar: %p\n", g);
 	grammar_log(g);
-	Parser p = parser_build(g);
-	ast_log(parseraw(p, "12", &adds));
-	ast_log(parseraw(p, "12+25", &adds));
-	ast_log(parseraw(p, "(-21*13/2)*((12/2-25*4)-1)", &adds));
-	ast_log(parseraw(p, "120-15-29*2-13", &adds));
+	ParserBuildResult pr = parser_build(g);
+	REQUIRE(IsOk_T(pr));
+	IfElse_T(pr, p, {
+		IfElse_T(parser_parse(p, lexer0, "12", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "12+25", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+		IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &adds), ast, { ast_log(ast); }, err, { FAIL_CHECK("Parser error"); });
+	}, err, { FAIL("Parser build failed"); });
 }
