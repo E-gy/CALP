@@ -18,12 +18,12 @@ static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol
 		if(!IsOk_T(rsast)) break;
 		gast->d.group.children[i++] = rsast.r.ok;
 	}
-	if(i != rsc) ast_destroy(gast);
-	else {
-		*str = sstr;
-		return Ok_T(parse_result, gast);
+	if(i != rsc){
+		ast_destroy(gast);
+		return Error_T(parse_result, {"rule match failed"});
 	}
-	return Error_T(parse_result, {"rule match failed"});
+	*str = sstr;
+	return Ok_T(parse_result, gast);
 }
 
 static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str){
