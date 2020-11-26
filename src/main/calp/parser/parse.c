@@ -8,9 +8,7 @@ static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str);
 static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, EntityInfo gi);
 
 static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, EntityInfo gi){
-	size_t rsc = 0;
-	for(Symbol rs = r->symbols; rs; rs = rs->next) rsc++;
-	AST gast = ast_new_group(symb, gi->i.group.group, rsc);
+	AST gast = ast_new_group(symb, gi->i.group.group, r->symbolsc);
 	size_t i = 0;
 	string sstr = *str;
 	for(Symbol rs = r->symbols; rs; rs = rs->next){
@@ -18,7 +16,7 @@ static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol
 		if(!IsOk_T(rsast)) break;
 		gast->d.group.children[i++] = rsast.r.ok;
 	}
-	if(i != rsc){
+	if(i != r->symbolsc){
 		ast_destroy(gast);
 		return Error_T(parse_result, {"rule match failed"});
 	}
