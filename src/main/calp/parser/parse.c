@@ -20,6 +20,40 @@ static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol
 		ast_destroy(gast);
 		return Error_T(parse_result, {"rule match failed"});
 	}
+	if(gi->i.group.firsts->lr.r){
+		const Symbol lrfrom = gi->i.group.firsts->lr.from;
+		if(lrfrom->type == SYMBOL_TYPE_GROUP && lrfrom->val.group.id == gi->i.group.groupId){ //if false, internal error - invalid state
+			const Rule lrr = gi->i.group.firsts->lr.r;
+			while(true){
+				string ssstr = sstr;
+				AST ngast = ast_new_group(symb, gi->i.group.group, lrr->symbolsc);
+				Symbol lrs = lrr->symbols;
+				size_t i = 0;
+				for(; lrs && lrs != lrfrom; lrs = lrs->next){
+					ParseResult rsast = parser_makast(p, l, lrs, &ssstr); //in theory, accepts empty string
+					if(!IsOk_T(rsast)) break;
+					ngast->d.group.children[i++] = rsast.r.ok;
+				}
+				if(lrs != lrfrom){ //all symbols preceding self recursion didn't want to accept empty string
+					ast_destroy(ngast);
+					break;
+				}
+				const size_t yi = i++; //growth ast is put in only on success
+				for(lrs = lrs->next; lrs; lrs = lrs->next){
+					ParseResult rsast = parser_makast(p, l, lrs, &ssstr);
+					if(!IsOk_T(rsast)) break;
+					ngast->d.group.children[i++] = rsast.r.ok;
+				}
+				if(i != lrr->symbolsc){
+					ast_destroy(ngast);
+					break;
+				}
+				(ngast->d.group.children[yi] = gast)->symbol = lrfrom;
+				gast = ngast;
+				sstr = ssstr;
+			}
+		}
+	}
 	*str = sstr;
 	return Ok_T(parse_result, gast);
 }
