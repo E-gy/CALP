@@ -22,6 +22,10 @@ typedef struct groupfle* FirstListElement;
 struct groupfl {
 	FirstListElement first;
 	Rule fallback;
+	struct {
+		Rule r;
+		Symbol from;
+	} lr;
 };
 
 struct groupfle {

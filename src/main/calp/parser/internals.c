@@ -8,7 +8,7 @@
 
 FirstList FirstList_new(){
 	new(FirstList, l);
-	*l = (struct groupfl){null, null};
+	*l = (struct groupfl){null, null, {null, null}};
 	return l;
 }
 
@@ -96,6 +96,7 @@ void entimap_log(Grammar gr, EntitiesMap m){
 		log("		firsts: ");
 		for(FirstListElement f = i->i.group.firsts->first; f; f = f->next) logf("			'%s' -> %p", f->symbol->i.term.symbol->val.term.name, f->r);
 		logf("		fallback: %p", i->i.group.firsts->fallback);
+		if(i->i.group.firsts->lr.r) logf("		lr on: %p", i->i.group.firsts->lr.r);
 		log("		rules:");
 		for(Rule r = i->i.group.group->rules; r; r = r->next){
 			logif("			%p: ", r);

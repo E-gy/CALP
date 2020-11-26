@@ -21,6 +21,11 @@ static PBFResult parser_build_firsts(Grammar gr, EntitiesMap m, EntityInfo gi){
 					if(!fnni->nullable && FirstList_add(gi->i.group.firsts, fnni, r) != Ok) return Error_T(pbf_result, {"First list add element failed"});
 					break;
 				case SYMB_GROUP: {
+					if(fnni->i.group.group == g){
+						fnni->i.group.firsts->lr.r = r;
+						fnni->i.group.firsts->lr.from = fnn;
+						break;
+					}
 					PBFResult bfr = parser_build_firsts(gr, m, fnni);
 					if(!IsOk_T(bfr)) return bfr;
 					for(FirstListElement cpfl = fnni->i.group.firsts->first; cpfl; cpfl = cpfl->next) if(FirstList_add(gi->i.group.firsts, cpfl->symbol, r) != Ok) return Error_T(pbf_result, {"First list add element failed"});
