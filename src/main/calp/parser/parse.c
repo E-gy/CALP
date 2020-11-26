@@ -7,10 +7,10 @@
 static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str);
 static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, Group gr);
 
-static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, Group gr){
+static ParseResult parser_makastr(Parser p, Lexer l, string* str, Rule r, Symbol symb, EntityInfo gi){
 	size_t rsc = 0;
 	for(Symbol rs = r->symbols; rs; rs = rs->next) rsc++;
-	AST gast = ast_new_group(symb, gr, rsc);
+	AST gast = ast_new_group(symb, gi->i.group.group, rsc);
 	size_t i = 0;
 	string sstr = *str;
 	for(Symbol rs = r->symbols; rs; rs = rs->next){
@@ -45,13 +45,13 @@ static ParseResult parser_makast(Parser p, Lexer l, Symbol symb, string* str){
 			for(FirstListElement fl = gi->i.group.firsts->first; fl; fl = fl->next){
 				if(fl->symbol->type != SYMB_TERM) return Error_T(parse_result, {"[INTERNAL] Invalid state: non-terminal first list element"});
 				if(fl->symbol->i.term.symbolId(*str)){
-					ParseResult res = parser_makastr(p, l, str, fl->r, symb, gi->i.group.group);
+					ParseResult res = parser_makastr(p, l, str, fl->r, symb, gi);
 					if(IsOk_T(res)) return res;
 				}
 			}
 			if(gi->i.group.firsts->fallback){
 				Rule r = gi->i.group.firsts->fallback;
-				ParseResult res = parser_makastr(p, l, str, gi->i.group.firsts->fallback, symb, gi->i.group.group);
+				ParseResult res = parser_makastr(p, l, str, gi->i.group.firsts->fallback, symb, gi);
 				if(IsOk_T(res)) return res;
 			}
 			logdebug("<%s> first list exhausted, no matches", gi->i.group.group->name);
