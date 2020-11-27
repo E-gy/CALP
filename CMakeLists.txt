@@ -20,7 +20,14 @@ set_property(TARGET CALP PROPERTY POSITION_INDEPENDENT_CODE TRUE)
 
 add_library(CALPd SHARED $<TARGET_OBJECTS:CALP>)
 add_library(CALPs STATIC $<TARGET_OBJECTS:CALP>)
-target_compile_options(CALPs PUBLIC $<$<CONFIG:DEBUG>:--coverage>)
+
+add_library(CALPcov STATIC ${all_SRCS})
+target_compile_options(CALPcov PRIVATE
+	$<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+	$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wno-unused -Werror>
+)
+target_compile_options(CALPcov PUBLIC --coverage)
+target_link_libraries(CALPcov gcov)
 
 # Tests
 
@@ -52,8 +59,7 @@ target_link_libraries(tests Catch2::Catch2)
 
 include_directories(tests ${PROJECT_SOURCE_DIR}/src/api)
 include_directories(tests ${PROJECT_SOURCE_DIR}/src/main)
-target_link_libraries(tests CALPs)
-target_link_libraries(tests gcov)
+target_link_libraries(tests $<IF:$<CONFIG:DEBUG>,CALPcov,CALPs>)
 
 set(CTEST_OUTPUT_ON_FAILURE 1)
 include(CTest)
