@@ -16,7 +16,7 @@ Result_T(parser_build_result, Parser, string_v);
 #define ParserBuildResult struct parser_build_result
 
 /**
- * @param @consumes grammar
+ * @param grammar @consumes
  * @returns @produces result
  */
 ParserBuildResult parser_build(Grammar gr);

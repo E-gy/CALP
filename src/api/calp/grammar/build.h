@@ -10,19 +10,19 @@
 #include <calp/grammar.h>
 
 /**
- * @param @ref term
- * @param @ref name
+ * @param term @ref
+ * @param name @ref
  * @returns @produces symbol
  */
 Symbol symbol_new_term(TerminalSymbolId term, string name);
 /**
- * @param @ref group
+ * @param group @ref
  * @returns @produces symbol
  */
 Symbol symbol_new_group(GroupId group);
 
 /**
- * @param @consumes symbol
+ * @param symbol @consumes
  */
 void symbol_destroy(Symbol symbol);
 
@@ -34,12 +34,12 @@ typedef struct ruleb* RuleBuilder;
  */
 RuleBuilder ruleb_new();
 /**
- * @param @refmut builder
- * @param @consumes symbol
+ * @param builder @refmut
+ * @param symbol @consumes
  */
 RuleBuilder ruleb_add(RuleBuilder builder, Symbol symbol);
 /**
- * @param @consumes builder
+ * @param builder @consumes
  * @returns @produces rule
  */
 Rule ruleb_uild(RuleBuilder builder);
@@ -48,18 +48,18 @@ struct groupb;
 typedef struct groupb* GroupBuilder;
 
 /**
- * @param @ref id
- * @param @ref name
+ * @param id @ref
+ * @param name @ref
  * @returns @produces builder
  */
 GroupBuilder groupb_new(GroupId id, string name);
 /**
- * @param @refmut builder
- * @param @consumes rule
+ * @param builder @refmut
+ * @param rule @consumes
  */
 GroupBuilder groupb_add(GroupBuilder builder, Rule rule);
 /**
- * @param @consumes builder
+ * @param builder @consumes
  * @returns @produces group
  */
 Group groupb_uild(GroupBuilder builder);
@@ -72,12 +72,12 @@ typedef struct gramb* GrammarBuilder;
  */
 GrammarBuilder gramb_new(string name);
 /**
- * @param @refmut builder
- * @param @consumes group
+ * @param builder @refmut
+ * @param group @consumes
  */
 GrammarBuilder gramb_add(GrammarBuilder builder, Group group);
 /**
- * @param @consumes builder
+ * @param builder @consumes
  * @returns @produces grammar
  */
 Grammar gramb_uild(GrammarBuilder builder);

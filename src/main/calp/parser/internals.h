@@ -39,9 +39,9 @@ struct groupfle {
  */
 FirstList FirstList_new();
 /**
- * @param @refmut l
- * @param @ref symbol
- * @param @ref r
+ * @param l @refmut
+ * @param symbol @ref
+ * @param r @ref
  */
 Result FirstList_add(FirstList l, EntityInfo symbol, Rule r);
 
@@ -90,8 +90,8 @@ struct entimap {
 typedef struct entimap* EntitiesMap;
 
 /**
- * @param @ref i
- * @param @copy ii
+ * @param i @ref
+ * @param ii @copy
  */
 bool entinf_eq(EntityInfo i, struct entinf ii);
 
@@ -100,21 +100,21 @@ bool entinf_eq(EntityInfo i, struct entinf ii);
  */
 EntitiesMap entimap_new();
 /**
- * @param @ref map
- * @param @copy key
+ * @param map @ref
+ * @param key @copy
  * @returns @ref info
  */
 EntityInfo entimap_get(EntitiesMap map, struct entinf key);
 /**
- * @param @refmut map
- * @param @copy kv
+ * @param map @refmut
+ * @param kv @copy
  * @returns @ref info
  */
 EntityInfo entimap_add(EntitiesMap map, struct entinf kv);
 
 /**
- * @param @ref grammar
- * @param @ref map
+ * @param grammar @ref
+ * @param map @ref
  */
 void entimap_log(Grammar grammar, EntitiesMap map);
 

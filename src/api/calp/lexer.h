@@ -13,7 +13,7 @@
 
 /**
  * Given a string finds the end of the token, returning null if the string does not begin with the token
- * @param @ref str
+ * @param str @ref
  * @returns @produces @ref end [exclusive]
  */
 typedef string (*SelfLexingToken)(string);
@@ -26,8 +26,8 @@ Result_T(lexer_result, struct {
 #define LexerResult struct lexer_result
 
 /**
- * @param @ref str
- * @param @ref token
+ * @param str @ref
+ * @param token @ref
  * @returns @produces result
  */
 typedef struct lexer_result (*Lexer)(string,SelfLexingToken);
