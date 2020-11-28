@@ -11,12 +11,12 @@
 #include <calp/grammar.h>
 
 /**
- * @ref grammar
- * @ref symbols
+ * @param @ref grammar
+ * @param @ref symbols
  */
 void symbols_logi(Grammar grammar, Symbol symbols);
 
 /**
- * @ref grammar
+ * @param @ref grammar
  */
 void grammar_log(Grammar grammar);

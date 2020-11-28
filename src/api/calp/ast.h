@@ -32,22 +32,22 @@ struct ast {
 };
 
 /**
- * @ref symbol
- * @produces ast
+ * @param @ref symbol
+ * @returns @produces ast
  */
 AST ast_new_group(Symbol symbol, Group g, size_t children_count);
 /**
- * @ref symbol
- * @consumes val
+ * @param @ref symbol
+ * @param @consumes val
  */
 AST ast_new_leaf(Symbol symbol, string_mut val);
 
 /**
- * @consumes ast
+ * @param @consumes ast
  */
 void ast_destroy(AST ast);
 
 /**
- * @ref ast
+ * @param @ref ast
  */
 void ast_log(AST ast);

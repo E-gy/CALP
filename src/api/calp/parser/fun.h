@@ -15,10 +15,10 @@ Result_T(parse_result, AST, string_v);
 #define ParseResult struct parse_result
 
 /**
- * @ref parser
- * @ref lexer
- * @ref input
- * @ref g0
- * @produces result
+ * @param @ref parser
+ * @param @ref lexer
+ * @param @ref input
+ * @param @ref g0
+ * @returns @produces result
  */
 ParseResult parser_parse(Parser parser, Lexer lexer, string input, GroupId g0);
