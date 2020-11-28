@@ -1,5 +1,14 @@
 #pragma once
 
+/**
+ * @file lexer.h
+ * Lexer definition.
+ * 
+ * Definition of what a lexer is.
+ * No implementations here.
+ * 
+ */
+
 #include "ptypes.h"
 
 /**

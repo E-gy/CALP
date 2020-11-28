@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * @file fun.h
+ * Everything you can do with a parser
+ * 
+ */
+
 #include <calp/ptypes.h>
 #include <calp/parser.h>
 #include <calp/lexer.h>

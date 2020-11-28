@@ -1,5 +1,12 @@
 #pragma once
 
+/**
+ * @file build.h
+ * Grammar construction functionality.
+ * 
+ * Provides functions necessary to construct a grammar at runtime.
+ */
+
 #include <calp/grammar.h>
 
 /**

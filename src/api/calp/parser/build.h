@@ -1,5 +1,13 @@
 #pragma once
 
+/**
+ * @file build.h
+ * Everything you need to build a parser.
+ * 
+ * Turns out, you don't need much... besides grammar.
+ * 
+ */
+
 #include <calp/parser.h>
 #include <calp/grammar.h>
 #include <calp/ptypes.h>

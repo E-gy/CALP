@@ -1,5 +1,13 @@
 #pragma once
 
+/**
+ * @file fun.h
+ * Grammar functions.
+ * 
+ * Everything you can do with the grammar itself.
+ * 
+ */
+
 #include <calp/grammar.h>
 
 /**
