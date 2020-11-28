@@ -1,15 +1,20 @@
 #pragma once
 
+/**
+ * @file buffer.h
+ * High low level binary/char string buffer for manipulations with ease.
+ */
+
 #include <calp/ptypes.h>
 
+/**
+ * Self-managing null terminated binary/char buffer with length information.
+ */
 struct buffer {
 	size_t cap;
 	size_t size;
 	char* data;
 };
-/**
- * Self-managing null terminated binary/char buffer with length information.
- */
 typedef struct buffer* Buffer;
 
 /**
@@ -40,7 +45,11 @@ string_mut buffer_destr(Buffer buffer);
 Buffer buffer_new_from(string str, ssize_t len);
 
 /**
- * @refmut buffer
+ * Resizes the buffer
+ * 
+ * @param buffer @refmut buffer to resize
+ * @param newcap new buffer capacity
+ * @return Result of the operation
  */
 Result buffer_resize(Buffer buffer, size_t newcap);
 

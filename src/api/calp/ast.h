@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file ast.h
+ * AST structure & operations
+ */
+
 #include "grammar.h"
 
 #include "ptypes.h"
