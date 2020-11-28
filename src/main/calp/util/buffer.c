@@ -1,4 +1,4 @@
-#include "buffer.h"
+#include <calp/util/buffer.h>
 
 #include <stdlib.h>
 #include "null.h"
