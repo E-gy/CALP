@@ -16,7 +16,7 @@ struct ast {
 		AST_GROUP,
 		AST_LEAF,
 	} type;
-	Symbol symbol;
+	/** @ref */ Symbol symbol;
 	union {
 		struct {
 			/** @ref */ GroupId groupId;
