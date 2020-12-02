@@ -38,6 +38,12 @@ struct groupfle {
  * @returns @produces list
  */
 FirstList FirstList_new();
+
+/**
+ * @param l @consumes 
+ */
+void FirstList_destroy(FirstList l);
+
 /**
  * @param l @refmut
  * @param symbol @ref
@@ -99,6 +105,12 @@ bool entinf_eq(EntityInfo i, struct entinf ii);
  * @returns @produces map
  */
 EntitiesMap entimap_new();
+
+/**
+ * @param map @consumes
+ */
+void entimap_destroy(EntitiesMap map);
+
 /**
  * @param map @ref
  * @param key @copy
