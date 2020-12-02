@@ -27,8 +27,8 @@ SCENARIO("basic", "[basic][parsing][parser construction][grammar]"){
 		THEN("parser can be built"){
 			IfElse_T(pr, p, {
 				AND_THEN("what can be parsed - parses"){
-					IfElse_T(parser_parse(p, lexer0, "a", &grp_0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "bba", &grp_0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "a", &grp_0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "bba", &grp_0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 				}
 				AND_THEN("what can't be parsed  - errors"){
 					IfOk_T(parser_parse(p, lexer0, "", &grp_0), wast, { ast_log(wast); FAIL_CHECK("^ Parsed successfully invalid input ^"); });
@@ -38,10 +38,11 @@ SCENARIO("basic", "[basic][parsing][parser construction][grammar]"){
 					IfOk_T(parser_parse(p, lexer0, "b b	a", &grp_0), wast, { ast_log(wast); FAIL_CHECK("^ Parsed successfully invalid input ^"); });
 				}
 				AND_THEN("what can be parsed, with an appropriate lexer - parses"){
-					IfElse_T(parser_parse(p, lexer_spacebegone, "a", &grp_0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer_spacebegone, "bba", &grp_0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer_spacebegone, "b b	a", &grp_0), ast, { ast_log(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer_spacebegone, "a", &grp_0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer_spacebegone, "bba", &grp_0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer_spacebegone, "b b	a", &grp_0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 				}
+				parser_destroy(p);
 			}, err, { FAIL_FMT("Parser build failed"); });
 		}
 	}

@@ -108,6 +108,7 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 								CHECK(v == 12);
 							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); });
 						}
+						ast_destroy(ast);
 					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 					IfElse_T(parser_parse(p, lexer0, "12+25", &entry), ast, {
 						ast_log(ast);
@@ -116,6 +117,7 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 								CHECK(v == (12+25));
 							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); });
 						}
+						ast_destroy(ast);
 					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 					IfElse_T(parser_parse(p, lexer0, "(-21*13/2)*((12/2-25*4)-1)", &entry), ast, {
 						ast_log(ast);
@@ -124,6 +126,7 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 								CHECK(v == ((-21*13/2)*((12/2-25*4)-1)));
 							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); });
 						}
+						ast_destroy(ast);
 					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 					IfElse_T(parser_parse(p, lexer0, "120-15-29*2-13", &entry), ast, {
 						ast_log(ast);
@@ -132,8 +135,10 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 								CHECK(v == (120-15-29*2-13));
 							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); }); 
 						}
+						ast_destroy(ast);
 					}, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 				}
+				parser_destroy(p);
 			}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
 		}
 	}
