@@ -48,6 +48,12 @@ AST ast_new_leaf(Symbol symbol, string_mut val);
 void ast_destroy(AST ast);
 
 /**
+ * @param ast @ref 
+ * @return AST 
+ */
+AST ast_clone(AST ast);
+
+/**
  * @param ast @ref
  */
 void ast_log(AST ast);
