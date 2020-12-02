@@ -124,6 +124,12 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 						AND_THEN("the result evaluates correctly"){
 							IfElse_T(math_eval(ast), v, {
 								CHECK(v == ((-21*13/2)*((12/2-25*4)-1)));
+								THEN("on clone too"){
+									AST clone = ast_clone(ast); //yes, i know. the lamest way to test cover ast cloning ¯\_(ツ)_/¯
+									REQUIRE(!!clone);
+									REQUIRE(OrElse_T(math_eval(clone), 0) == (120-15-29*2-13));
+									ast_destroy(clone);
+								}
 							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); });
 						}
 						ast_destroy(ast);
@@ -133,6 +139,12 @@ SCENARIO("math grammar", "[math grammar][parsing][parser construction][grammar]"
 						AND_THEN("the result evaluates correctly"){
 							IfElse_T(math_eval(ast), v, {
 								CHECK(v == (120-15-29*2-13));
+								THEN("on clone too"){
+									AST clone = ast_clone(ast); //yes, i know. the lamest way to test cover ast cloning ¯\_(ツ)_/¯
+									REQUIRE(!!clone);
+									REQUIRE(OrElse_T(math_eval(clone), 0) == (120-15-29*2-13));
+									ast_destroy(clone);
+								}
 							}, err, { FAIL_CHECK_FMT("Eval error - %s", err.s); }); 
 						}
 						ast_destroy(ast);
