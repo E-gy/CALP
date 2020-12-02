@@ -104,3 +104,10 @@ ParserBuildResult parser_build(Grammar gr){
 	*p = (struct parser){gr, m};
 	return Ok_T(parser_build_result, p);
 }
+
+void parser_destroy(Parser p){
+	if(!p) return;
+	entimap_destroy(p->ents);
+	grammar_destroy(p->grammar);
+	free(p);
+}
