@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Install Utilities
+      shell: bash
+      run: sudo apt-get install -y lcov valgrind
     - uses: actions/checkout@v2
     - name: Create Build Environment
       run: cmake -E make_directory ${{runner.workspace}}/build
@@ -31,9 +34,6 @@ jobs:
       working-directory: ${{runner.workspace}}/build
       shell: bash
       run: make ExperimentalCoverage
-    - name: Install Lcov
-      shell: bash
-      run: sudo apt-get install -y lcov
     - name: lcov
       working-directory: ${{runner.workspace}}/build
       shell: bash
