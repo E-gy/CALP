@@ -34,11 +34,11 @@ SCENARIO("advanced grammar example", "[advanced][parsing][parser construction][g
 			ParserBuildResult pr = parser_build(g);
 			IfElse_T(pr, p, {
 				AND_THEN("what can be parsed - parses"){
-					IfElse_T(parser_parse(p, lexer0, "a bc", &g0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "ac", &g0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "bc", &g0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "a   bc", &g0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
-					IfElse_T(parser_parse(p, lexer0, "  bc", &g0), ast, { ast_log(ast); ast_destroy(ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "a bc", &g0), ast, { ast_log(ast.ast); ast_destroy(ast.ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "ac", &g0), ast, { ast_log(ast.ast); ast_destroy(ast.ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "bc", &g0), ast, { ast_log(ast.ast); ast_destroy(ast.ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "a   bc", &g0), ast, { ast_log(ast.ast); ast_destroy(ast.ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
+					IfElse_T(parser_parse(p, lexer0, "  bc", &g0), ast, { ast_log(ast.ast); ast_destroy(ast.ast); }, err, { FAIL_CHECK_FMT("Parser error - %s", err.s); });
 				}
 				parser_destroy(p);
 			}, err, { FAIL_FMT("Parser build failed - %s", err.s); });
