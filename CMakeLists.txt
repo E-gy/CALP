@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 
 Include(FetchContent)
 
-project(CALP VERSION 0.1.2)
+project(CALP VERSION 0.2.0)
 set(CMAKE_C_STANDARD 99)
 
 include_directories(${PROJECT_SOURCE_DIR}/src/api)
