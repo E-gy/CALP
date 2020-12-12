@@ -31,6 +31,7 @@ struct groupfl {
 struct groupfle {
 	/** @ref */ EntityInfo symbol;
 	/** @ref */ Rule r;
+	int priority;
 	FirstListElement next;
 };
 

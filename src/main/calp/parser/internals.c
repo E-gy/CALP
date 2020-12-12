@@ -27,8 +27,11 @@ Result FirstList_add(FirstList l, EntityInfo symbol, Rule r){
 	for(FirstListElement e = l->first; e; e = e->next) if(e->symbol == symbol && e->r == r) return Ok;
 	FirstListElement e = malloc(sizeof(*e));
 	if(!e) return Error;
-	*e = (struct groupfle){symbol, r, l->first};
-	l->first = e;
+	const int priority = (symbol->type == SYMB_TERM ? symbol->i.term.symbol->priority : 0) + symbol->priority + r->priority;
+	FirstListElement* ins = &l->first;
+	for(; *ins && (*ins)->priority > priority; ins = &((*ins)->next));
+	*e = (struct groupfle){symbol, r, priority, *ins};
+	*ins = e;
 	return Ok;
 }
 
