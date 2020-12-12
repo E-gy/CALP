@@ -118,7 +118,7 @@ void entimap_log(Grammar gr, EntitiesMap m){
 		logf("		init: %s", i->init ? "true" : "false");
 		logf("		nullable: %s", i->nullable ? "true" : "false");
 		log("		firsts: ");
-		for(FirstListElement f = i->i.group.firsts->first; f; f = f->next) logf("			'%s' -> %p", f->symbol->i.term.symbol->val.term.name, f->r);
+		for(FirstListElement f = i->i.group.firsts->first; f; f = f->next) logf("			'%s' -> %p (%d)", f->symbol->i.term.symbol->val.term.name, f->r, f->priority);
 		logf("		fallback: %p", i->i.group.firsts->fallback);
 		if(i->i.group.firsts->lr.r) logf("		lr on: %p", i->i.group.firsts->lr.r);
 		log("		rules:");
