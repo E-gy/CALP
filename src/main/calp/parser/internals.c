@@ -22,12 +22,11 @@ void FirstList_destroy(FirstList l){
 	free(l);
 }
 
-Result FirstList_add(FirstList l, EntityInfo symbol, Rule r){
+Result FirstList_add(FirstList l, EntityInfo symbol, Rule r, int priority){
 	if(!l) return Error;
 	for(FirstListElement e = l->first; e; e = e->next) if(e->symbol == symbol && e->r == r) return Ok;
 	FirstListElement e = malloc(sizeof(*e));
 	if(!e) return Error;
-	const int priority = (symbol->type == SYMB_TERM ? symbol->i.term.symbol->priority : 0) + symbol->priority + r->priority;
 	FirstListElement* ins = &l->first;
 	for(; *ins && (*ins)->priority > priority; ins = &((*ins)->next));
 	*e = (struct groupfle){symbol, r, priority, *ins};

@@ -50,7 +50,7 @@ void FirstList_destroy(FirstList l);
  * @param symbol @ref
  * @param r @ref
  */
-Result FirstList_add(FirstList l, EntityInfo symbol, Rule r);
+Result FirstList_add(FirstList l, EntityInfo symbol, Rule r, int priority);
 
 
 // Entity Info
